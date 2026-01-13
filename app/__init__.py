@@ -1,6 +1,7 @@
 from flask import Flask
-from .db import db, migrate
 import os
+from .db import db, migrate
+from app.routes.home_routes import bp as home_bp
 
 def create_app(config=None):
   app = Flask(__name__) 
@@ -8,3 +9,15 @@ def create_app(config=None):
 
   app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
   app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
+
+  if config:
+    app.config.update(config)
+
+  db.init_app(app)
+  migrate.init_app(app, db)
+
+  # register blueprint later
+  app.register_blueprint(home_bp)
+
+  return app
+
