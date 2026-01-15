@@ -49,8 +49,8 @@ class Site(db.Model):
   city: Mapped[str]
   state: Mapped[str]
   postal_code: Mapped[str]
-  latitude: Mapped[Optional[float]]
-  longitude: Mapped[Optional[float]]
+  latitude: Mapped[float]
+  longitude: Mapped[float]
   phone: Mapped[str]
   eligibility: Mapped[Eligibility]
   hours: Mapped[dict] = mapped_column(JSONB, default=dict)
@@ -69,8 +69,8 @@ class Site(db.Model):
       city=site_dict["city"],
       state=site_dict["state"],
       postal_code=site_dict["postal_code"],
-      latitude=site_dict.get("latitude"),
-      longitude=site_dict.get("longitude"),
+      latitude=site_dict["latitude"],
+      longitude=site_dict["longitude"],
       phone=site_dict["phone"],
       eligibility=Eligibility.from_frontend(site_dict["eligibility"]),
       hours=site_dict["hours"],
