@@ -2,6 +2,8 @@ from flask import Flask
 import os
 from .db import db, migrate
 from .models.site import Site
+from .models.service import Service
+from .models.site_service import SiteService
 from app.routes.home_routes import bp as home_bp
 
 def create_app(config=None):

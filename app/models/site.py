@@ -1,12 +1,15 @@
 from datetime import datetime
 from enum import Enum
 from typing import Optional
+from typing import TYPE_CHECKING
 
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import JSONB
 
-from ..db import db
+if TYPE_CHECKING: 
+  from .service import Service
 
+from ..db import db
 
 class SiteStatus(str, Enum):
   OPEN = "open"
@@ -54,6 +57,7 @@ class Site(db.Model):
   service_notes: Mapped[str]
   created_at: Mapped[datetime]
   updated_at: Mapped[Optional[datetime]]
+  services: Mapped[list["Service"]] = relationship(secondary="site_service", back_populates="sites")
 
   @classmethod
   def from_dict(cls, site_dict):
@@ -73,4 +77,28 @@ class Site(db.Model):
       service_notes=site_dict.get("service_notes", ""),
       created_at=datetime.now(),
     )
+  
+  def to_dict(self):
+    site_as_dict = {
+      "id": self.id,
+      "name": self.name,
+      "status": self.status.value,
+      "address_line1": self.address_line1,
+      "address_line2": self.address_line2,
+      "city": self.city,
+      "state": self.state,
+      "postal_code": self.postal_code,
+      "latitude": self.latitude,
+      "longitude": self.longitude,
+      "phone": self.phone,
+      "eligibility": self.eligibility.value,
+      "hours": self.hours,
+      "service_notes": self.service_notes,
+      "created_at": self.created_at.isoformat(),
+      "updated_at": self.updated_at.isoformat() if self.updated_at else None
+    }
+
+    return site_as_dict
+  
+  # To do, Come up an logic to convert to lat and lon based on the address. 
 
