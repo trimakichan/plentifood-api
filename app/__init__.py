@@ -1,6 +1,7 @@
 from flask import Flask
 import os
 from .db import db, migrate
+from .models.site import Site
 from app.routes.home_routes import bp as home_bp
 
 def create_app(config=None):
