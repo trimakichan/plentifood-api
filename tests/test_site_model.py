@@ -1,6 +1,6 @@
 from app.models.site import Eligibility, Site, SiteStatus
 from app.db import db
-from datetime import datetime
+from datetime import datetime, timezone
 import pytest
 import copy
 
@@ -107,17 +107,17 @@ def test_to_dict_missing_id(valid_site):
     # Arrange
 
     # Act
-    result = valid_site.to_dict()
+    site_dict = valid_site.to_dict()
 
     # Assert
-    assert result["id"] is None
-    assert result["name"] == valid_site.name
-    assert result["status"] == SiteStatus.OPEN.value
-    assert result["eligibility"] == Eligibility.OLDER_ADULTS_AND_ELIGIBLE.value
-    assert result["address_line2"] is None
-    assert result["hours"] == valid_site.hours
-    assert isinstance(result["created_at"], str)
-    assert result["updated_at"] is None
+    assert site_dict["id"] is None
+    assert site_dict["name"] == valid_site.name
+    assert site_dict["status"] == SiteStatus.OPEN.value
+    assert site_dict["eligibility"] == Eligibility.OLDER_ADULTS_AND_ELIGIBLE.value
+    assert site_dict["address_line2"] is None
+    assert site_dict["hours"] == valid_site.hours
+    assert isinstance(site_dict["created_at"], str)
+    assert site_dict["updated_at"] is None
 
 
 def test_to_dict_missing_latitude():
@@ -136,12 +136,12 @@ def test_to_dict_missing_latitude():
         eligibility=Eligibility.OLDER_ADULTS_AND_ELIGIBLE,
         hours={},
         service_notes="No notes",
-        created_at=datetime.now(),
+        created_at=datetime.now(timezone.utc),
         updated_at=None,
     )
 
     # Act
-    result = site.to_dict()
+    site_dict = site.to_dict()
 
     # Assert
-    assert result["latitude"] is None
+    assert site_dict["latitude"] is None
