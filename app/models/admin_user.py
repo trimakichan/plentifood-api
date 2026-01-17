@@ -1,8 +1,11 @@
 from datetime import datetime
+from typing import TYPE_CHECKING
 from ..db import db
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey
-from app.models.organization import Organization
+
+if TYPE_CHECKING:
+    from app.models.organization import Organization
 
 class AdminUser(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)

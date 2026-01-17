@@ -8,6 +8,7 @@ import os
 from app.db import db
 from app.models.site import Eligibility, Site, SiteStatus
 from app.models.service import Service
+from app.models.organization import Organization, OrgType
 
 
 load_dotenv()
@@ -34,17 +35,30 @@ def app():
         db.drop_all()
 
 
-# This is for tests that make HTTP requests.
 @pytest.fixture
 def client(app):
     return app.test_client()
 
 
 @pytest.fixture
+def test_organization(app):
+    """Create and save a test organization."""
+    org = Organization(
+        name="Test Organization",
+        organization_type=OrgType.FOOD_TYPE,
+        website_url="https://test.org",
+        created_at=datetime.now(timezone.utc),
+    )
+    db.session.add(org)
+    db.session.commit()
+    return org
+
+
+@pytest.fixture
 def valid_site_dict():
     return {
         "name": "Algona/Pacific Food Pantry - Food Distribution Center",
-        "status": "Open",
+        "status": "open",
         "address_line1": "603 3rd Ave SE",
         "city": "Algona",
         "state": "WA",
@@ -52,7 +66,7 @@ def valid_site_dict():
         "latitude": 47.265011,
         "longitude": -122.236,
         "phone": "123-456-7890",
-        "eligibility": "Older Adults 60+ and Eligible Participants",
+        "eligibility": "olderAdultsAndEligible",
         "hours": {
             "sunday": [{"open": "10:00", "close": "14:00"}],
             "monday": [{"open": "10:00", "close": "14:00"}],
@@ -96,7 +110,7 @@ def valid_site():
 
 
 @pytest.fixture
-def two_saved_sites(app):
+def two_saved_sites(app, test_organization):
     site_a = Site(
         name="Test Site",
         status=SiteStatus.OPEN,
@@ -119,6 +133,7 @@ def two_saved_sites(app):
             "saturday": [],
     },
         service_notes="No notes",
+        organization_id=test_organization.id,
         created_at=datetime.now(timezone.utc),
         updated_at=None,
     )
@@ -152,6 +167,7 @@ def two_saved_sites(app):
             "On the 2nd Wednesday of the Month, we provide Evening Food Bank services "
             "from 5:30pm to 6:15pm."
         ),
+        organization_id=test_organization.id,
         created_at=datetime.now(timezone.utc),
         updated_at=None,
     )
@@ -161,7 +177,7 @@ def two_saved_sites(app):
 
 
 @pytest.fixture
-def three_saved_sites(app):
+def three_saved_sites(app, test_organization):
     site_wed = Site(
         name="Wed Site",
         status=SiteStatus.OPEN,
@@ -184,6 +200,7 @@ def three_saved_sites(app):
             "saturday": [],
         },
         service_notes="",
+        organization_id=test_organization.id,
         created_at=datetime.now(timezone.utc),
         updated_at=None,
     )
@@ -210,6 +227,7 @@ def three_saved_sites(app):
             "saturday": [],
         },
         service_notes="",
+        organization_id=test_organization.id,
         created_at=datetime.now(timezone.utc),
         updated_at=None,
     )
@@ -236,6 +254,7 @@ def three_saved_sites(app):
             "saturday": [],
         },
         service_notes="",
+        organization_id=test_organization.id,
         created_at=datetime.now(timezone.utc),
         updated_at=None,
     )

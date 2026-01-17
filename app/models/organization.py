@@ -1,10 +1,13 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String
 from enum import Enum
-from typing import Optional
+from datetime import datetime, timezone
+from typing import Optional, TYPE_CHECKING
 from ..db import db
 from app.models.admin_user import AdminUser
-from app.models.site import Site
+
+if TYPE_CHECKING:
+    from app.models.site import Site
 
 
 class OrgType(str, Enum):
@@ -14,7 +17,6 @@ class OrgType(str, Enum):
     NON_PROFIT = "non_profit"
     OTHERS = "others"
 
-    # FoodBank -> food_back
     @classmethod
     def from_frontend(cls, value: str) -> "OrgType":
         """Convert frontend format to OrgType"""
@@ -38,12 +40,15 @@ class Organization(db.Model):
         order_by="Site.id"
     )
     admin_user: Mapped["AdminUser"] = relationship(back_populates="organization", uselist=False)
+    created_at: Mapped[datetime]
+    updated_at: Mapped[Optional[datetime]]
 
     @classmethod
     def from_dict(cls, organization_dict):
         return cls(
             name=organization_dict["name"],
-            organization_type=OrgType.from_frontend(organization_dict["organization_type"])
+            organization_type=OrgType.from_frontend(organization_dict["organization_type"]),
+            created_at=datetime.now(timezone.utc)
         )
 
     def to_dict(self):
@@ -52,6 +57,8 @@ class Organization(db.Model):
             "name": self.name,
             "organization_type": self.organization_type,
             "website_url": self.website_url,
-            "sites": [site.to_dict() for site in self.sites]
+            "sites": [site.to_dict() for site in self.sites],
+            "created_at": self.created_at.isoformat(),
+            "updated_at": self.updated_at.isoformat() if self.updated_at else None,
         }
         return organization_dict

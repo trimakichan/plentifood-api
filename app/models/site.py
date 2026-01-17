@@ -3,14 +3,16 @@ from enum import Enum
 from typing import Optional
 from typing import TYPE_CHECKING
 
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import JSONB
+
+from app.models.organization import Organization 
 
 if TYPE_CHECKING:
     from .service import Service
 
 from ..db import db
-
 
 class SiteStatus(str, Enum):
     OPEN = "open"
@@ -19,9 +21,7 @@ class SiteStatus(str, Enum):
     @classmethod
     def from_frontend(cls, value: str) -> "SiteStatus":
         """Convert frontend format to SiteStatus enum"""
-        mapping = {"Open": cls.OPEN, "Closed": cls.CLOSED}
-
-        return mapping[value]
+        return cls(value)
 
 
 class Eligibility(str, Enum):
@@ -33,9 +33,9 @@ class Eligibility(str, Enum):
     def from_frontend(cls, value: str) -> "Eligibility":
         """Convert frontend format to Eligibility enum"""
         mapping = {
-            "General Public": cls.GENERAL_PUBLIC,
-            "Older Adults 60+ and Eligible Participants": cls.OLDER_ADULTS_AND_ELIGIBLE,
-            "Youth and Young Adults": cls.YOUTH_YOUNG_ADULTS,
+            "generalPublic": cls.GENERAL_PUBLIC,
+            "olderAdultsAndEligible": cls.OLDER_ADULTS_AND_ELIGIBLE,
+            "youthAndYoungAdults": cls.YOUTH_YOUNG_ADULTS,
         }
         return mapping[value]
 
@@ -55,11 +55,13 @@ class Site(db.Model):
     eligibility: Mapped[Eligibility]
     hours: Mapped[dict] = mapped_column(JSONB, default=dict)
     service_notes: Mapped[str]
-    created_at: Mapped[datetime]
-    updated_at: Mapped[Optional[datetime]]
     services: Mapped[list["Service"]] = relationship(
     secondary="site_service", back_populates="sites"
     )
+    organization_id: Mapped[int] = mapped_column(ForeignKey("organization.id"))
+    organization: Mapped["Organization"] = relationship(back_populates="sites")
+    created_at: Mapped[datetime]
+    updated_at: Mapped[Optional[datetime]]
 
     @classmethod
     def from_dict(cls, site_dict):
