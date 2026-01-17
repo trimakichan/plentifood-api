@@ -14,7 +14,6 @@ if TYPE_CHECKING:
 
 from ..db import db
 
-
 class SiteStatus(str, Enum):
     OPEN = "open"
     CLOSED = "closed"
