@@ -55,11 +55,11 @@ class Site(db.Model):
     eligibility: Mapped[Eligibility]
     hours: Mapped[dict] = mapped_column(JSONB, default=dict)
     service_notes: Mapped[str]
-    created_at: Mapped[datetime]
-    updated_at: Mapped[Optional[datetime]]
     services: Mapped[list["Service"]] = relationship(
     secondary="site_service", back_populates="sites"
     )
+    created_at: Mapped[datetime]
+    updated_at: Mapped[Optional[datetime]]
 
     @classmethod
     def from_dict(cls, site_dict):
