@@ -53,10 +53,10 @@ class Organization(db.Model):
 
     def to_dict(self):
         organization_dict = {
-            "organization_id": self.id,
+            "id": self.id,
             "name": self.name,
             "organization_type": self.organization_type,
-            "website_url": self.website_url,
+            "website_url": self.website_url if self.website_url else None,
             "sites": [site.to_dict() for site in self.sites],
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,

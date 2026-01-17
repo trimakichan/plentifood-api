@@ -4,8 +4,11 @@ from .db import db, migrate
 from .models.site import Site
 from .models.service import Service
 from .models.site_service import SiteService
+from .models.organization import Organization
+from .models.admin_user import AdminUser
 from app.routes.home_routes import bp as home_bp
 from app.routes.site_routes import bp as site_bp
+from app.routes.register_routes import bp as register_bp
 
 def create_app(config=None):
     app = Flask(__name__)
@@ -22,5 +25,6 @@ def create_app(config=None):
 
     app.register_blueprint(home_bp)
     app.register_blueprint(site_bp)
+    app.register_blueprint(register_bp)
 
     return app

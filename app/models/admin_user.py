@@ -1,8 +1,9 @@
 from datetime import datetime
 from typing import TYPE_CHECKING
+from datetime import datetime, timezone
 from ..db import db
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, func
 
 if TYPE_CHECKING:
     from app.models.organization import Organization
@@ -12,20 +13,20 @@ class AdminUser(db.Model):
     username: Mapped[str]
     organization_id: Mapped[int] = mapped_column(ForeignKey("organization.id"), unique=True)
     organization: Mapped["Organization"] = relationship(back_populates="admin_user", uselist=False)
-    created_at: Mapped[datetime]
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
 
     @classmethod
     def from_dict(cls, admin_dict):
         return cls(
-            username=admin_dict["username"]
+            username=admin_dict["username"],
+            created_at=datetime.now(timezone.utc)
         )
 
     def to_dict(self):
         organization_dict = {
+            "id": self.id,
             "organization_id": self.organization_id,
-            "name": self.name,
-            "organization_type": self.organization_type,
-            "website_url": self.website_url,
-            "sites": [site.to_dict() for site in self.sites]
+            "username": self.username,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
         }
         return organization_dict

@@ -1,8 +1,8 @@
-"""created admin_user + organization models
+"""recreate model migrations
 
-Revision ID: 0da8bbddfb1f
-Revises: 58c4b1d0db58
-Create Date: 2026-01-16 19:46:22.571110
+Revision ID: 8c7682c7376b
+Revises: 
+Create Date: 2026-01-16 20:06:48.455048
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = '0da8bbddfb1f'
-down_revision = '58c4b1d0db58'
+revision = '8c7682c7376b'
+down_revision = None
 branch_labels = None
 depends_on = None
 
