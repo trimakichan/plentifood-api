@@ -4,6 +4,7 @@ from enum import Enum
 from typing import Optional
 from ..db import db
 from app.models.admin_user import AdminUser
+from app.models.site import Site
 
 
 class OrgType(str, Enum):
@@ -47,7 +48,7 @@ class Organization(db.Model):
 
     def to_dict(self):
         organization_dict = {
-            "organization_id": self.organization_id,
+            "organization_id": self.id,
             "name": self.name,
             "organization_type": self.organization_type,
             "website_url": self.website_url,
