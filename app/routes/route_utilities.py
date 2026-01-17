@@ -6,20 +6,33 @@ from ..db import db
 VALID_DAYS = {"sunday","monday","tuesday","wednesday","thursday","friday","saturday"}
 
 def is_open_on_day(day):
+    """
+    Returns a SQL condition that checks if a site is open on the given day.
+
+    A site is considered open if `hours[day]` exists and contains
+    at least one time range. Missing or empty days are treated as closed.
+    """
+        
     return func.coalesce(
         func.jsonb_array_length(Site.hours.op("->")(day)),
         0
     ) > 0
 
 def apply_site_filters(query, filters):
+    """
+    where(or_(*[is_open_on_day(day) for day in days]))
+    is equivalent to 
+    WHERE
+    COALESCE(jsonb_array_length(hours -> 'wednesday'), 0) > 0
+    OR
+    COALESCE(jsonb_array_length(hours -> 'friday'), 0) > 0;
+    """
     
     # optional: day
     days = [ day.lower() for day in filters.getlist("day")]
 
     if days:
         query = query.where(or_(*[is_open_on_day(day) for day in days]))
-
-
 
 
     # optional: organization_type 
@@ -67,5 +80,5 @@ def get_models_with_filters(cls, filters=None):
 
         
     models = db.session.scalars(query.order_by(cls.id)).all()
-    models_response = [model.to_dict() for model in models]
+    models_response = [model.to_dict() for model in models] 
     return models_response

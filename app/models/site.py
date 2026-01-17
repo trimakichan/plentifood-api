@@ -58,7 +58,7 @@ class Site(db.Model):
     created_at: Mapped[datetime]
     updated_at: Mapped[Optional[datetime]]
     services: Mapped[list["Service"]] = relationship(
-    secondary="site_service", back_populates="sites"
+        secondary="site_service", back_populates="sites"
     )
 
     @classmethod
