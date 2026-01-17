@@ -15,7 +15,6 @@ class OrgType(str, Enum):
     NON_PROFIT = "non_profit"
     OTHERS = "others"
 
-    # FoodBank -> food_back
     @classmethod
     def from_frontend(cls, value: str) -> "OrgType":
         """Convert frontend format to OrgType"""

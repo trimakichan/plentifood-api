@@ -19,9 +19,7 @@ class SiteStatus(str, Enum):
     @classmethod
     def from_frontend(cls, value: str) -> "SiteStatus":
         """Convert frontend format to SiteStatus enum"""
-        mapping = {"Open": cls.OPEN, "Closed": cls.CLOSED}
-
-        return mapping[value]
+        return cls(value)
 
 
 class Eligibility(str, Enum):
@@ -33,9 +31,9 @@ class Eligibility(str, Enum):
     def from_frontend(cls, value: str) -> "Eligibility":
         """Convert frontend format to Eligibility enum"""
         mapping = {
-            "General Public": cls.GENERAL_PUBLIC,
-            "Older Adults 60+ and Eligible Participants": cls.OLDER_ADULTS_AND_ELIGIBLE,
-            "Youth and Young Adults": cls.YOUTH_YOUNG_ADULTS,
+            "generalPublic": cls.GENERAL_PUBLIC,
+            "olderAdultsAndEligible": cls.OLDER_ADULTS_AND_ELIGIBLE,
+            "youthAndYoungAdults": cls.YOUTH_YOUNG_ADULTS,
         }
         return mapping[value]
 

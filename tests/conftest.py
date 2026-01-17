@@ -44,7 +44,7 @@ def client(app):
 def valid_site_dict():
     return {
         "name": "Algona/Pacific Food Pantry - Food Distribution Center",
-        "status": "Open",
+        "status": "open",
         "address_line1": "603 3rd Ave SE",
         "city": "Algona",
         "state": "WA",
@@ -52,7 +52,7 @@ def valid_site_dict():
         "latitude": 47.265011,
         "longitude": -122.236,
         "phone": "123-456-7890",
-        "eligibility": "Older Adults 60+ and Eligible Participants",
+        "eligibility": "olderAdultsAndEligible",
         "hours": {
             "sunday": [{"open": "10:00", "close": "14:00"}],
             "monday": [{"open": "10:00", "close": "14:00"}],
