@@ -25,7 +25,6 @@ def test_get_nearby_sites_with_two_sites(client, two_saved_sites):
 
     query = db.select(Site).order_by(Site.id)
     sites = db.session.scalars(query).all()
-    print(sites)
 
     assert response_body[0] == sites[0].to_dict()
     assert response_body[1] == sites[1].to_dict()

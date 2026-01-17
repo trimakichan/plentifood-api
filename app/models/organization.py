@@ -2,10 +2,12 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String
 from enum import Enum
 from datetime import datetime, timezone
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 from ..db import db
 from app.models.admin_user import AdminUser
-from app.models.site import Site
+
+if TYPE_CHECKING:
+    from app.models.site import Site
 
 
 class OrgType(str, Enum):

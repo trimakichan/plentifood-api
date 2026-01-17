@@ -3,8 +3,11 @@ from enum import Enum
 from typing import Optional
 from typing import TYPE_CHECKING
 
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import JSONB
+
+from app.models.organization import Organization 
 
 if TYPE_CHECKING:
     from .service import Service
@@ -56,6 +59,8 @@ class Site(db.Model):
     services: Mapped[list["Service"]] = relationship(
     secondary="site_service", back_populates="sites"
     )
+    organization_id: Mapped[int] = mapped_column(ForeignKey("organization.id"))
+    organization: Mapped["Organization"] = relationship(back_populates="sites")
     created_at: Mapped[datetime]
     updated_at: Mapped[Optional[datetime]]
 
