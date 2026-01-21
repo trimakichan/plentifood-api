@@ -9,6 +9,7 @@ from app.db import db
 from app.models.site import Eligibility, Site, SiteStatus
 from app.models.service import Service
 from app.models.organization import Organization, OrgType
+from app.models.admin_user import AdminUser
 
 
 load_dotenv()
@@ -307,3 +308,40 @@ def three_saved_sites(app, test_organization):
 #     created_at=datetime.now(timezone.utc),
 #     updated_at=None,
 # )
+
+##############################
+### Mami's test starts here ###
+##############################
+
+@pytest.fixture
+def valid_admin_dict():
+    return {
+        "username": "test_user",
+    }
+
+
+@pytest.fixture
+def valid_admin_user():
+    return AdminUser(
+        username="Test User",
+        created_at=datetime.now(timezone.utc),
+    )
+
+@pytest.fixture
+def valid_organization_dict():
+    return {
+        "name": "Test Organization",
+        "organization_type": "nonProfit",
+        "website_url": "https://example.com"
+    }
+
+@pytest.fixture
+def valid_organization():
+    return Organization(
+        name="Test Organization",
+        organization_type=OrgType.from_frontend("nonProfit"),
+        website_url="https://example.com",
+        created_at=datetime.now(timezone.utc),
+        updated_at=None,
+    )
+

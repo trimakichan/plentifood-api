@@ -13,7 +13,8 @@ class AdminUser(db.Model):
     username: Mapped[str]
     organization_id: Mapped[int] = mapped_column(ForeignKey("organization.id"), unique=True)
     organization: Mapped["Organization"] = relationship(back_populates="admin_user", uselist=False)
-    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    created_at: Mapped[datetime]
+    #  = mapped_column(server_default=func.now())
 
     @classmethod
     def from_dict(cls, admin_dict):
@@ -23,10 +24,10 @@ class AdminUser(db.Model):
         )
 
     def to_dict(self):
-        organization_dict = {
+        admin_dict = {
             "id": self.id,
             "organization_id": self.organization_id,
             "username": self.username,
-            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "created_at": self.created_at.isoformat(),
         }
-        return organization_dict
+        return admin_dict
