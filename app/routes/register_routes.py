@@ -19,8 +19,6 @@ bp = Blueprint("register_bp", __name__, url_prefix="/register")
 #   }
 # }
 
-
-
 @bp.post("")
 def register():
     request_body = request.get_json()

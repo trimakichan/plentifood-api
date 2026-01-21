@@ -1,8 +1,8 @@
-"""recreate model migrations
+"""recreate model
 
-Revision ID: 8c7682c7376b
+Revision ID: 54aae6a294d1
 Revises: 
-Create Date: 2026-01-16 20:06:48.455048
+Create Date: 2026-01-21 11:28:54.180256
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = '8c7682c7376b'
+revision = '54aae6a294d1'
 down_revision = None
 branch_labels = None
 depends_on = None
