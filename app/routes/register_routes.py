@@ -30,12 +30,14 @@ def register():
         response = {"message": f"Invalid request: missing {error.args[0]}"}
         abort(make_response(response, 400))
 
-    # create Organization 
-    new_org = Organization.from_dict(org_data)
-    # create AdminUser
-    new_admin = AdminUser.from_dict(admin_data)
-
-    # connect those instance 
+    try:
+        new_org = Organization.from_dict(org_data)
+        new_admin = AdminUser.from_dict(admin_data)
+    except KeyError as error:
+        invalid_msg = {"details": "Invalid data"}
+        abort(make_response(invalid_msg, 400))
+    
+    # connect those instances 
     new_admin.organization = new_org
 
     db.session.add(new_org)

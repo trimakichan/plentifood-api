@@ -4,11 +4,10 @@ from enum import Enum
 from datetime import datetime, timezone
 from typing import Optional, TYPE_CHECKING
 from ..db import db
-from app.models.admin_user import AdminUser
 
 if TYPE_CHECKING:
     from app.models.site import Site
-
+    from app.models.admin_user import AdminUser
 
 class OrgType(str, Enum):
     FOOD_TYPE = "food_bank"
@@ -31,7 +30,7 @@ class OrgType(str, Enum):
 
 class Organization(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    name: Mapped[str] = mapped_column(String[100])
+    name: Mapped[str] = mapped_column(String(100))
     organization_type: Mapped[OrgType] 
     website_url: Mapped[Optional[str]] = mapped_column(String(255))
     sites: Mapped[list["Site"]] = relationship(

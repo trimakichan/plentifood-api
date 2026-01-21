@@ -7,12 +7,13 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import JSONB
 
-from app.models.organization import Organization 
+from app.models.organization import Organization
 
 if TYPE_CHECKING:
     from .service import Service
 
 from ..db import db
+
 
 class SiteStatus(str, Enum):
     OPEN = "open"
@@ -56,7 +57,7 @@ class Site(db.Model):
     hours: Mapped[dict] = mapped_column(JSONB, default=dict)
     service_notes: Mapped[str]
     services: Mapped[list["Service"]] = relationship(
-    secondary="site_service", back_populates="sites"
+        secondary="site_service", back_populates="sites"
     )
     organization_id: Mapped[int] = mapped_column(ForeignKey("organization.id"))
     organization: Mapped["Organization"] = relationship(back_populates="sites")
@@ -65,9 +66,24 @@ class Site(db.Model):
 
     @classmethod
     def from_dict(cls, site_dict):
+
+        DAYS_OF_WEEK = [
+            "sunday",
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+        ]
+
+        hours = site_dict.get("hours")
+        if not isinstance(hours, dict) or set(hours.keys()) != set(DAYS_OF_WEEK):
+            raise KeyError("hours")
+
         return cls(
             name=site_dict["name"],
-            status=SiteStatus.from_frontend(site_dict["status"]),
+            status=SiteStatus.OPEN, 
             address_line1=site_dict["address_line1"],
             address_line2=site_dict.get("address_line2"),
             city=site_dict["city"],

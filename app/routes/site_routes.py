@@ -1,4 +1,4 @@
-from flask import Blueprint, request, abort, make_response, Response
+from flask import Blueprint, request, abort, Response
 from datetime import datetime, timezone
 from ..models.site import Site, SiteStatus, Eligibility
 from .route_utilities import validate_model, get_models_with_filters
