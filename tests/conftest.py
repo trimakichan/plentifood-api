@@ -19,7 +19,7 @@ load_dotenv()
 def app():
     test_config = {
         "TESTING": True,
-        "SQLALCHEMY_DATABASE_URI_TEST": os.environ.get("SQLALCHEMY_DATABASE_URI_TEST"),
+        "SQLALCHEMY_DATABASE_URI": os.environ.get("SQLALCHEMY_DATABASE_URI_TEST"),
     }
 
     app = create_app(test_config)
@@ -59,7 +59,6 @@ def test_organization(app):
 def valid_site_dict():
     return {
         "name": "Algona/Pacific Food Pantry - Food Distribution Center",
-        "status": "open",
         "address_line1": "603 3rd Ave SE",
         "city": "Algona",
         "state": "WA",

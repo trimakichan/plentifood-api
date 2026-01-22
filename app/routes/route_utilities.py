@@ -71,6 +71,19 @@ def validate_model(cls, model_id):
 
     return model
 
+# def create_model(cls, model_data):
+#     try:
+#         new_model = cls.from_dict(model_data)
+#     except KeyError as error:
+#         invalid_msg = {"details": "Invalid data"}
+#         abort(make_response(invalid_msg, 400))
+    
+#     db.session.add(new_model)
+#     db.session.commit()
+
+#     return new_model
+
+
 
 # day={{DAY}}&
 # organization_type={{ORGANIZATION_TYPE}}&
@@ -85,7 +98,6 @@ def validate_model(cls, model_id):
 
 
 def get_models_with_filters(cls, filters=None):
-    print(filters)
     query = db.select(cls)
     # find the nearby sites based on lat, lon, radius_miles
 

@@ -6,8 +6,6 @@ import copy
 
 
 def test_from_dict_returns_site(valid_site_dict):
-    # Arrange
-
     # Act
     site = Site.from_dict(valid_site_dict)
     # Assert
