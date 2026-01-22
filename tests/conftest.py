@@ -308,9 +308,9 @@ def three_saved_sites(app, test_organization):
 #     updated_at=None,
 # )
 
-##############################
-### Mami's test starts here ###
-##############################
+####################################
+# Admin, Organization and register #
+####################################
 
 @pytest.fixture
 def valid_admin_dict():
@@ -343,4 +343,49 @@ def valid_organization():
         created_at=datetime.now(timezone.utc),
         updated_at=None,
     )
+
+# register_routes
+@pytest.fixture
+def valid_register_payload():
+    return {
+    "organization": {
+        "name": "Asian Counseling and Referral Service",
+        "organization_type": "church",
+        "website_url": "https://acrs.org/services/aging-services-for-older-adults/acrs-food-bank/"
+    },
+    "admin": {
+        "username": "Test register"
+    }
+    }
+
+@pytest.fixture
+def payload_missing_admin():
+    return {
+        "organization": {
+            "name": "Asian Counseling and Referral Service",
+            "organization_type": "church",
+            "website_url": "https://acrs.org/services/aging-services-for-older-adults/acrs-food-bank/"
+        },
+    }
+
+@pytest.fixture
+def payload_missing_organization():
+    return {
+        "admin": {
+            "username": "Test register"
+        }
+    }
+
+@pytest.fixture
+def payload_invalid_org_type():
+    return {
+        "organization": {
+            "name": "Asian Counseling and Referral Service",
+            "organization_type": "restaurant",
+            "website_url": "https://acrs.org/services/aging-services-for-older-adults/acrs-food-bank/"
+    },
+        "admin": {
+            "username": "Test register"
+    }
+    }
 

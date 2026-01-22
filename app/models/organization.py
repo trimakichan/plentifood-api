@@ -52,7 +52,7 @@ class Organization(db.Model):
         return cls(
             name=organization_dict["name"],
             organization_type=OrgType.from_frontend(organization_dict["organization_type"]),
-            website_url=organization_dict.get("website"),
+            website_url=organization_dict.get("website_url"),
             created_at=datetime.now(timezone.utc)
         )
 
