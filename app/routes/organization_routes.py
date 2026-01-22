@@ -5,7 +5,7 @@ from app.models.site import Site
 from ..db import db
 from app.routes.route_utilities import validate_model, create_model
 
-bp = Blueprint("boards_bp", __name__, url_prefix="organizations")
+bp = Blueprint("organizations_bp", __name__, url_prefix="organizations")
 
 @bp.get("")
 def get_all_orgs():
