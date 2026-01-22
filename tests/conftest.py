@@ -19,7 +19,7 @@ load_dotenv()
 def app():
     test_config = {
         "TESTING": True,
-        "SQLALCHEMY_DATABASE_URI_TEST": os.environ.get("SQLALCHEMY_DATABASE_URI_TEST"),
+        "SQLALCHEMY_DATABASE_URI": os.environ.get("SQLALCHEMY_DATABASE_URI_TEST"),
     }
 
     app = create_app(test_config)

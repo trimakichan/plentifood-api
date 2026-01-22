@@ -36,9 +36,14 @@ class Organization(db.Model):
     sites: Mapped[list["Site"]] = relationship(
         "Site",
         back_populates='organization',
-        order_by="Site.id"
+        order_by="Site.id",
+        cascade="all, delete-orphan"
     )
-    admin_user: Mapped["AdminUser"] = relationship(back_populates="organization", uselist=False)
+    admin_user: Mapped["AdminUser"] = relationship(
+        back_populates="organization",
+        uselist=False,
+        cascade="save-update, merge"
+    )
     created_at: Mapped[datetime]
     updated_at: Mapped[Optional[datetime]]
 
@@ -47,6 +52,7 @@ class Organization(db.Model):
         return cls(
             name=organization_dict["name"],
             organization_type=OrgType.from_frontend(organization_dict["organization_type"]),
+            website_url=organization_dict.get("website"),
             created_at=datetime.now(timezone.utc)
         )
 
@@ -55,7 +61,7 @@ class Organization(db.Model):
             "id": self.id,
             "name": self.name,
             "organization_type": self.organization_type,
-            "website_url": self.website_url if self.website_url else None,
+            "website_url": self.website_url,
             "sites": [site.to_dict() for site in self.sites],
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,

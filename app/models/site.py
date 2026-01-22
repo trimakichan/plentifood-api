@@ -60,7 +60,7 @@ class Site(db.Model):
         secondary="site_service", back_populates="sites"
     )
     organization_id: Mapped[int] = mapped_column(ForeignKey("organization.id"))
-    organization: Mapped["Organization"] = relationship(back_populates="sites")
+    organization: Mapped["Organization"] = relationship("Organization", back_populates="sites")
     created_at: Mapped[datetime]
     updated_at: Mapped[Optional[datetime]]
 
