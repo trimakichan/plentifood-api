@@ -8,7 +8,6 @@ def test_get_nearby_sites_with_no_records(client):
     # Act
     response = client.get("/sites/nearby?lat=47.3&lon=-122.2&radius_miles=50")
     response_body = response.get_json()
-    print(response, response_body)
 
     # Assert
     assert response.status_code == 200

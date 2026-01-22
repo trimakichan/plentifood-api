@@ -59,7 +59,6 @@ def test_organization(app):
 def valid_site_dict():
     return {
         "name": "Algona/Pacific Food Pantry - Food Distribution Center",
-        "status": "open",
         "address_line1": "603 3rd Ave SE",
         "city": "Algona",
         "state": "WA",

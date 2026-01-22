@@ -1,4 +1,4 @@
-from flask import Blueprint, request, abort, make_response, Response
+from flask import Blueprint, request, abort, Response, make_response
 from datetime import datetime, timezone
 from ..models.site import Site, SiteStatus, Eligibility
 from .route_utilities import validate_model, get_models_with_filters
@@ -35,13 +35,16 @@ def get_site(site_id):
     site = validate_model(Site, site_id)
     return site.to_dict()
 
+# refactor 
 @bp.patch("/<site_id>")
 def update_site(site_id):
     site = validate_model(Site, site_id)
     request_body = request.get_json()
 
     if not request_body:
-        abort(400, description="Request body cannot be empty.")
+        response = {"message": "Request body cannot be empty."}
+        abort(make_response(response, 400))
+
 
     for field in UPDATABLE_FIELDS:
         if field in request_body:

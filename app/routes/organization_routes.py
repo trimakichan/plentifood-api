@@ -1,52 +1,81 @@
-from flask import Blueprint, request, abort, make_response
-from app.models.organization import Organization
-from app.models.admin_user import AdminUser
-from app.models.site import Site
+from flask import Blueprint, request, abort, Response, make_response
+from datetime import datetime, timezone
+from ..models.organization import Organization, OrgType
+from ..models.site import Site
+from .route_utilities import validate_model, get_models_with_filters
 from ..db import db
-from app.routes.route_utilities import validate_model, create_model
 
-bp = Blueprint("organizations_bp", __name__, url_prefix="organizations")
+bp = Blueprint("organizations_bp", __name__, url_prefix="/organizations")
 
-@bp.get("")
-def get_all_orgs():
-    query = db.select(Organization)
-    orgs = db.session.scalars(query)
-    orgs_list = [org.to_dict() for org in orgs] 
-    return {"orgs": orgs_list}, 200
+UPDATABLE_FIELDS = {
+    "name",
+    "organization_type",
+    "website_url",
+}
+
+
+@bp.post("/<org_id>/sites")
+def create_site(org_id):
+    organization = validate_model(Organization, org_id)
+    request_body = request.get_json()
+
+    try:
+        new_site = Site.from_dict(request_body)
+    except KeyError as error:
+        invalid_msg = {"details": "Invalid data: {error}"}
+        abort(make_response(invalid_msg, 400)) 
+
+    new_site.organization = organization
+
+    db.session.add(new_site)
+    db.session.commit()
+
+    return make_response(new_site.to_dict(), 201)
 
 @bp.get("/<org_id>")
-def get_org(org_id):
-    org = validate_model(Organization, org_id)
-    return org.to_dict(), 200
+def get_organization(org_id):
+    organization = validate_model(Organization, org_id)
+    return organization.to_dict()
+
+@bp.get("/<org_id>/sites")
+# consider refactoring to use get_models_with_filters
+def get_organization_sites(org_id):
+    organization = validate_model(Organization, org_id)
+    
+    query = db.select(Site).where(Site.organization_id == organization.id)
+    sites = db.session.scalars(query).all()
+
+    sites_list = [site.to_dict() for site in sites]
+
+    return sites_list
+
+# refactor 
+@bp.patch("/<org_id>")
+def update_organization(org_id):
+    organization = validate_model(Organization, org_id)
+    request_body = request.get_json()
+
+    if not request_body:
+        response = {"message": "Request body cannot be empty."}
+        abort(make_response(response, 400))
+
+    for field in UPDATABLE_FIELDS:
+        if field in request_body:
+            if field == "organization_type":
+                organization.organization_type = OrgType.from_frontend(request_body["organization_type"])
+            else:
+                setattr(organization, field, request_body[field])
+    
+    organization.updated_at = datetime.now(timezone.utc)
+    db.session.commit()
+
+    return Response(status=204, mimetype="application/json")
 
 @bp.delete("/<org_id>")
-def delete_org(org_id):
-    org = validate_model(Organization, org_id)
-    db.session.delete(org)
+def delete_organization(org_id):
+    organization = validate_model(Organization, org_id)
+
+    db.session.delete(organization)
     db.session.commit()
-    return {"details": f'Organization {org_id} "{org.name}" successfully deleted'}, 200
 
-# with sites
-@bp.post("/<org_id>/sites")
-def create_site_on_org(org_id):
-    org = validate_model(Organization, org_id)
-    data = request.get_json()
-    return create_model(Site, {**data, "organization_id": Organization.id})
-
-@bp.get("/<org_id>/site")
-def get_cards_on_board(org_id):
-    org = validate_model(Organization, org_id)
-    sites = org.sites
-    sites_list = [site.to_dict() for site in sites]
-    return {"sites": sites_list}, 200
-
-@bp.delete("/<org_id>/<site_id>")
-def delete_site_on_org(org_id, site_id):
-    org = validate_model(Organization, org_id)
-    site = validate_model(Site, site_id)
-    if site.org_id != org.org_id:
-        response = {"details": f"Site {site_id} does not belong to Organization {org_id}"}
-        abort(make_response(response, 400))
-    db.session.delete(site)
-    db.session.commit()
-    return {"details": f'Site {site_id} successfully deleted from Board {site_id}'}, 200
+    return Response(status=204, mimetype="application/json")
