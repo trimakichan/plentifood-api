@@ -384,8 +384,8 @@ def payload_invalid_org_type():
             "organization_type": "restaurant",
             "website_url": "https://acrs.org/services/aging-services-for-older-adults/acrs-food-bank/"
     },
-    "admin": {
-        "username": "Test register"
+        "admin": {
+            "username": "Test register"
     }
     }
 
