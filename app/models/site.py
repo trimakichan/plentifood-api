@@ -95,6 +95,7 @@ class Site(db.Model):
             eligibility=Eligibility.from_frontend(site_dict["eligibility"]),
             hours=site_dict["hours"],
             service_notes=site_dict.get("service_notes", ""),
+            organization_id=site_dict["organization_id"],
             created_at=datetime.now(timezone.utc),
         )
 
