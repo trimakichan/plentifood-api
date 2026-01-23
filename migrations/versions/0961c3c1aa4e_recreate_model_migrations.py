@@ -1,8 +1,8 @@
-"""recreate table for this branch
+"""Recreate model migrations
 
-Revision ID: 544d9968442b
-Revises: 54aae6a294d1
-Create Date: 2026-01-21 14:10:01.508735
+Revision ID: 0961c3c1aa4e
+Revises: 
+Create Date: 2026-01-22 20:05:59.270841
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = '544d9968442b'
-down_revision = '54aae6a294d1'
+revision = '0961c3c1aa4e'
+down_revision = None
 branch_labels = None
 depends_on = None
 
@@ -36,7 +36,7 @@ def upgrade():
     op.create_table('admin_user',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('username', sa.String(), nullable=False),
-    sa.Column('organization_id', sa.Integer(), nullable=False),
+    sa.Column('organization_id', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['organization_id'], ['organization.id'], ),
     sa.PrimaryKeyConstraint('id'),
