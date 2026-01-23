@@ -114,9 +114,6 @@ def one_saved_site(app, test_organization):
     db.session.commit()
     return site
 
-
-
-
 @pytest.fixture
 def two_saved_sites(app, test_organization):
     site_a = Site(

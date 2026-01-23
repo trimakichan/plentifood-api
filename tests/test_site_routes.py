@@ -68,3 +68,27 @@ def test_get_site_by_id(client, one_saved_site):
     site = db.session.scalars(query).one()
 
     assert response_body == site.to_dict()
+
+def test_get_site_invalid_site_id(client):
+    # Arrange
+    response = client.get("/sites/id")
+    response_body = response.get_json()
+
+    # Assert
+    assert response.status_code == 400
+    assert response_body == {"message": "Site id invalid"}
+
+def test_get_site_not_found(client):
+    # Arrange
+    response = client.get("/sites/0")
+    response_body = response.get_json()
+
+    # Assert
+    assert response.status_code == 404
+    assert response_body == {"message": "Site 0 not found"}
+
+
+
+
+
+# 
