@@ -78,6 +78,7 @@ def valid_site_dict(test_organization):
         },
         "service_notes": "No special notes",
         "organization_id": test_organization.id,
+        "services": ["food_bank"]
     }
 
 

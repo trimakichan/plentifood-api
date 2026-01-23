@@ -46,38 +46,38 @@ def assert_dict_matches_site(site, dict_data):
 
 def test_from_dict_returns_site(valid_site_dict,test_organization):
     # Act
-    site = Site.from_dict(valid_site_dict)
+    site = Site.from_dict(valid_site_dict, org_id=test_organization.id)
     # Assert
     assert_site_matches_dict(site, valid_site_dict)
 
 
-def test_from_dict_missing_name(valid_site_dict):
+def test_from_dict_missing_name(valid_site_dict, test_organization):
     # Arrange
     site_dict = copy.deepcopy(valid_site_dict)
     site_dict.pop("name")
 
     # Act and Assert
     with pytest.raises(KeyError, match="name"):
-        site = Site.from_dict(site_dict)
+        site = Site.from_dict(site_dict, org_id=test_organization.id)
 
 
-def test_from_dict_missing_latitude(valid_site_dict):
+def test_from_dict_missing_latitude(valid_site_dict, test_organization):
     # Arrange
     site_dict = copy.deepcopy(valid_site_dict)
     site_dict.pop("latitude")
 
     # Act and Assert
     with pytest.raises(KeyError, match="latitude"):
-        site = Site.from_dict(site_dict)
+        site = Site.from_dict(site_dict, org_id=test_organization.id)
 
 
-def test_from_dict_with_extra_keys(valid_site_dict):
+def test_from_dict_with_extra_keys(valid_site_dict, test_organization):
     # Arrange
     site_dict = copy.deepcopy(valid_site_dict)
     site_dict["extra_key"] = "extra_value"
 
     # Act
-    site = Site.from_dict(site_dict)
+    site = Site.from_dict(site_dict, org_id=test_organization.id)
 
     # Assert
     assert_site_matches_dict(site, valid_site_dict)
