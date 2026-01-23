@@ -22,7 +22,7 @@ def create_site(org_id):
     try:
         new_site = Site.from_dict(request_body)
     except KeyError as error:
-        invalid_msg = {"details": "Invalid data: {error}"}
+        invalid_msg = {"details": f"Invalid data: {error}"}
         abort(make_response(invalid_msg, 400)) 
 
     new_site.organization = organization

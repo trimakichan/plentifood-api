@@ -271,6 +271,30 @@ def three_saved_sites(app, test_organization):
 
     return site_wed, site_fri, site_mon
 
+####################################
+# Service #
+####################################
+@pytest.fixture
+def valid_service_dict():
+    return {
+        "name": "food_bank"
+    }
+
+@pytest.fixture
+def valid_service():
+    return Service(
+        name="food_bank"
+    )
+
+@pytest.fixture
+def two_saved_services(app):
+    # Arrange
+    service_one = Service(name="food_bank")
+    service_two = Service(name="meal")
+
+    db.session.add_all([service_one, service_two])
+    db.session.commit()
+
 
 ####################################
 # Admin, Organization and register #

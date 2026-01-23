@@ -15,6 +15,12 @@ class Service(db.Model):
         secondary="site_service", back_populates="services"
     )
 
-    # @classmethod
-    # def from_dict(cls, service_data):
-    #   return cls(name=service_data["name"])
+    @classmethod
+    def from_dict(cls, service_data):
+        return cls(name=service_data["name"])
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name
+        }

@@ -34,7 +34,7 @@ def register():
         new_org = Organization.from_dict(org_data)
         new_admin = AdminUser.from_dict(admin_data)
     except KeyError as error:
-        invalid_msg = {"details": "Invalid data"}
+        invalid_msg = {"details": f"Invalid data: {error}"}
         abort(make_response(invalid_msg, 400))
     
     # connect those instances 
