@@ -66,7 +66,7 @@ def valid_site_dict(test_organization):
         "latitude": 47.265011,
         "longitude": -122.236,
         "phone": "123-456-7890",
-        "eligibility": "olderAdultsAndEligible",
+        "eligibility": "older_adults_and_eligible",
         "hours": {
             "sunday": [{"open": "10:00", "close": "14:00"}],
             "monday": [{"open": "10:00", "close": "14:00"}],

@@ -15,19 +15,6 @@ class OrgType(str, Enum):
     COMMUNITY_CENTER = "community_center"
     NON_PROFIT = "non_profit"
     OTHERS = "others"
-
-    # @classmethod
-    # def from_frontend(cls, value: str) -> "OrgType":
-    #     """Convert frontend format to OrgType"""
-    #     mapping = {
-    #         "foodBank": cls.FOOD_TYPE,
-    #         "church": cls.CHURCH,
-    #         "communityCenter": cls.COMMUNITY_CENTER,
-    #         "nonProfit": cls.NON_PROFIT,
-    #         "others": cls.OTHERS
-    #     }
-    #     return mapping[value]
-
 class Organization(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String(100))

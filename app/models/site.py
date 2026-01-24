@@ -19,28 +19,17 @@ class SiteStatus(str, Enum):
     OPEN = "open"
     CLOSED = "closed"
 
-    @classmethod
-    def from_frontend(cls, value: str) -> "SiteStatus":
-        """Convert frontend format to SiteStatus enum"""
-        return cls(value)
+    # @classmethod
+    # def from_frontend(cls, value: str) -> "SiteStatus":
+    #     """Convert frontend format to SiteStatus enum"""
+    #     return cls(value)
 
 
 class Eligibility(str, Enum):
     GENERAL_PUBLIC = "general_public"
     OLDER_ADULTS_AND_ELIGIBLE = "older_adults_and_eligible"
     YOUTH_YOUNG_ADULTS = "youth_young_adults"
-
-    @classmethod
-    def from_frontend(cls, value: str) -> "Eligibility":
-        """Convert frontend format to Eligibility enum"""
-        mapping = {
-            "generalPublic": cls.GENERAL_PUBLIC,
-            "olderAdultsAndEligible": cls.OLDER_ADULTS_AND_ELIGIBLE,
-            "youthAndYoungAdults": cls.YOUTH_YOUNG_ADULTS,
-        }
-        return mapping[value]
-
-
+    
 class Site(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     name: Mapped[str]
@@ -92,7 +81,7 @@ class Site(db.Model):
             latitude=site_dict["latitude"],
             longitude=site_dict["longitude"],
             phone=site_dict["phone"],
-            eligibility=Eligibility.from_frontend(site_dict["eligibility"]),
+            eligibility=Eligibility(site_dict["eligibility"]),
             hours=site_dict["hours"],
             service_notes=site_dict.get("service_notes", ""),
             organization_id=org_id,
@@ -122,4 +111,3 @@ class Site(db.Model):
 
         return site_as_dict
 
-    # To do, Come up an logic to convert to lat and lon based on the address.
