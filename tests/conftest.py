@@ -319,7 +319,7 @@ def valid_admin_user():
 def valid_organization_dict():
     return {
         "name": "Test Organization",
-        "organization_type": "nonProfit",
+        "organization_type": "non_profit",
         "website_url": "https://example.com"
     }
 
@@ -327,7 +327,7 @@ def valid_organization_dict():
 def valid_organization():
     return Organization(
         name="Test Organization",
-        organization_type=OrgType.from_frontend("nonProfit"),
+        organization_type=OrgType("non_profit"),
         website_url="https://example.com",
         created_at=datetime.now(timezone.utc),
         updated_at=None,
