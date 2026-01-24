@@ -4,6 +4,7 @@ from ..models.organization import Organization, OrgType
 from ..models.site import Site
 from ..models.service import Service
 from .route_utilities import validate_model, get_models_with_filters
+from ..services.locationiq import get_coordinates
 from ..db import db
 
 bp = Blueprint("organizations_bp", __name__, url_prefix="/organizations")
@@ -20,12 +21,19 @@ def create_site(org_id):
     request_body = request.get_json()
 
     try:
+        if request_body.get("latitude") is None or request_body.get("longitude") is None:
+            coordinates = get_coordinates(request_body)
+            request_body["latitude"] = coordinates["latitude"]
+            request_body["longitude"] = coordinates["longitude"]    
 
         new_site = Site.from_dict(request_body, org_id=organization.id)
         service_names = request_body["services"]
     except KeyError as error:
         invalid_msg = {"details": f"Invalid data: {error}"}
-        abort(make_response(invalid_msg, 400)) 
+        abort(make_response(invalid_msg, 400))
+    except ValueError as e:
+        invalid_msg = {"details": str(e)}
+        abort(make_response(invalid_msg, 502))
 
     services = db.session.scalars(
                 db.select(Service).where(Service.name.in_(service_names))
@@ -73,7 +81,7 @@ def update_organization(org_id):
     for field in UPDATABLE_FIELDS:
         if field in request_body:
             if field == "organization_type":
-                organization.organization_type = OrgType.from_frontend(request_body["organization_type"])
+                organization.organization_type = OrgType(request_body["organization_type"])
             else:
                 setattr(organization, field, request_body[field])
     

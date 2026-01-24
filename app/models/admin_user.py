@@ -14,7 +14,6 @@ class AdminUser(db.Model):
     organization_id: Mapped[Optional[int]] = mapped_column(ForeignKey("organization.id"), unique=True)
     organization: Mapped["Organization"] = relationship(back_populates="admin_user", uselist=False)
     created_at: Mapped[datetime]
-    #  = mapped_column(server_default=func.now())
 
     @classmethod
     def from_dict(cls, admin_dict):

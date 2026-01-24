@@ -8,17 +8,6 @@ from ..db import db
 
 bp = Blueprint("register_bp", __name__, url_prefix="/register")
 
-# {
-#   "organization": {
-#     "name": "Asian Counseling and Referral Service",
-#     "organization_type": "food_bank",
-#     "website": "https://acrs.org/services/aging-services-for-older-adults/acrs-food-bank/"
-#   },
-#   "admin": {
-#     "username": "Makiko"
-#   }
-# }
-
 @bp.post("")
 def register():
     request_body = request.get_json()
@@ -36,6 +25,8 @@ def register():
     except KeyError as error:
         invalid_msg = {"details": f"Invalid data: {error}"}
         abort(make_response(invalid_msg, 400))
+    except ValueError:
+        abort(make_response({"details": "Invalid data: invalid organization_type"}, 400))
     
     # connect those instances 
     new_admin.organization = new_org

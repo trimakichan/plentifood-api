@@ -67,7 +67,7 @@ def test_invalid_org_type(client, payload_invalid_org_type):
 
     # Assert: HTTP response
     assert response.status_code == 400
-    assert response_body == {"details": "Invalid data: 'restaurant'"}
+    assert response_body == {"details": "Invalid data: invalid organization_type"}
 
     # Assert: DB side effects (no new records)
     assert db.session.query(AdminUser).count() == 0
@@ -94,7 +94,7 @@ def test_admin_user_organization_id_must_be_unique(app):
     # Create org and commit
     org = Organization(
         name="Uniq Org",
-        organization_type=OrgType.from_frontend("nonProfit"),
+        organization_type=OrgType("non_profit"),
         website_url="https://example.com",
         created_at=datetime.now(timezone.utc),
         updated_at=None,

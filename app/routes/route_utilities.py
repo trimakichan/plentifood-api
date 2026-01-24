@@ -22,7 +22,7 @@ def apply_site_filters(query, filters):
     # Work on this logic once services are added
     # optional: organization_type
     org_types = [
-        OrgType.from_frontend(value) for value in filters.getlist("organization_type")
+        OrgType(value) for value in filters.getlist("organization_type")
     ]
     if org_types:
         query = query.join(Organization).where(
@@ -97,3 +97,4 @@ def get_models_with_filters(cls, filters=None):
     models = db.session.scalars(query.order_by(cls.id)).all()
     models_response = [model.to_dict() for model in models]
     return models_response
+
