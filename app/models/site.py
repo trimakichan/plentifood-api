@@ -65,7 +65,7 @@ class Site(db.Model):
     updated_at: Mapped[Optional[datetime]]
 
     @classmethod
-    def from_dict(cls, site_dict):
+    def from_dict(cls, site_dict, org_id):
 
         DAYS_OF_WEEK = [
             "sunday",
@@ -95,6 +95,7 @@ class Site(db.Model):
             eligibility=Eligibility.from_frontend(site_dict["eligibility"]),
             hours=site_dict["hours"],
             service_notes=site_dict.get("service_notes", ""),
+            organization_id=org_id,
             created_at=datetime.now(timezone.utc),
         )
 
@@ -114,6 +115,7 @@ class Site(db.Model):
             "eligibility": self.eligibility.value,
             "hours": self.hours,
             "service_notes": self.service_notes,
+            "services": [service.to_dict() for service in self.services],
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,
         }

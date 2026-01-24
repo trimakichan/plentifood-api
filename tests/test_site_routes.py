@@ -3,7 +3,7 @@ from app.models.site import Site, SiteStatus, Eligibility
 from app.db import db
 import pytest
 
-
+# --------------get_nearby_sites tests--------------
 def test_get_nearby_sites_with_no_records(client):
     # Act
     response = client.get("/sites/nearby?lat=47.3&lon=-122.2&radius_miles=50")
@@ -27,11 +27,6 @@ def test_get_nearby_sites_with_two_sites(client, two_saved_sites):
 
     assert response_body[0] == sites[0].to_dict()
     assert response_body[1] == sites[1].to_dict()
-
-
-    # filter tests
-    #  Both tes for "/sites/nearby"(400) and   
-    # "/sites/nearby?lat=47.3&lon=-122.2&radius_miles=10(200)"]
 
 
 def test_nearby_filter_day_single_wednesday(client, three_saved_sites):
@@ -59,3 +54,41 @@ def test_nearby_filter_day_multiple_or(client, three_saved_sites):
 
     names = {s["name"] for s in data}
     assert names == {"Wed Site", "Fri Site"}
+
+# --------------get_site tests--------------
+def test_get_site_by_id(client, one_saved_site):
+    # Act
+    response = client.get(f"/sites/{one_saved_site.id}")
+    response_body = response.get_json()
+
+    # Assert
+    assert response.status_code == 200
+
+    query = db.select(Site).where(Site.id == one_saved_site.id)
+    site = db.session.scalars(query).one()
+
+    assert response_body == site.to_dict()
+
+def test_get_site_invalid_site_id(client):
+    # Arrange
+    response = client.get("/sites/id")
+    response_body = response.get_json()
+
+    # Assert
+    assert response.status_code == 400
+    assert response_body == {"message": "Site id invalid"}
+
+def test_get_site_not_found(client):
+    # Arrange
+    response = client.get("/sites/0")
+    response_body = response.get_json()
+
+    # Assert
+    assert response.status_code == 404
+    assert response_body == {"message": "Site 0 not found"}
+
+
+
+
+
+# 

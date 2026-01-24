@@ -2,6 +2,7 @@ from flask import Blueprint, request, abort, Response, make_response
 from datetime import datetime, timezone
 from ..models.organization import Organization, OrgType
 from ..models.site import Site
+from ..models.service import Service
 from .route_utilities import validate_model, get_models_with_filters
 from ..db import db
 
@@ -13,19 +14,29 @@ UPDATABLE_FIELDS = {
     "website_url",
 }
 
-
 @bp.post("/<org_id>/sites")
 def create_site(org_id):
     organization = validate_model(Organization, org_id)
     request_body = request.get_json()
 
     try:
-        new_site = Site.from_dict(request_body)
+
+        new_site = Site.from_dict(request_body, org_id=organization.id)
+        service_names = request_body["services"]
     except KeyError as error:
-        invalid_msg = {"details": "Invalid data: {error}"}
+        invalid_msg = {"details": f"Invalid data: {error}"}
         abort(make_response(invalid_msg, 400)) 
 
+    services = db.session.scalars(
+                db.select(Service).where(Service.name.in_(service_names))
+            ).all()
+    
+    if len(services) != len(service_names):
+        invalid_msg = {"details": "One or more services are invalid."}
+        abort(make_response(invalid_msg, 400))  
+    
     new_site.organization = organization
+    new_site.services = services
 
     db.session.add(new_site)
     db.session.commit()

@@ -56,7 +56,7 @@ def test_organization(app):
 
 
 @pytest.fixture
-def valid_site_dict():
+def valid_site_dict(test_organization):
     return {
         "name": "Algona/Pacific Food Pantry - Food Distribution Center",
         "address_line1": "603 3rd Ave SE",
@@ -77,12 +77,14 @@ def valid_site_dict():
             "saturday": [],
         },
         "service_notes": "No special notes",
+        "organization_id": test_organization.id,
+        "services": ["food_bank"]
     }
 
 
 @pytest.fixture
-def valid_site():
-    return Site(
+def one_saved_site(app, test_organization):
+    site = Site(
         name="Test Site",
         status=SiteStatus.OPEN,
         address_line1="603 3rd Ave SE",
@@ -104,10 +106,14 @@ def valid_site():
             "saturday": [],
         },
         service_notes="No notes",
+        organization_id=test_organization.id,
         created_at=datetime.now(timezone.utc),
         updated_at=None,
     )
 
+    db.session.add(site)
+    db.session.commit()
+    return site
 
 @pytest.fixture
 def two_saved_sites(app, test_organization):
@@ -137,6 +143,8 @@ def two_saved_sites(app, test_organization):
         created_at=datetime.now(timezone.utc),
         updated_at=None,
     )
+
+    
 
     site_b = Site(
         name="Auburn Food Bank",
@@ -264,49 +272,30 @@ def three_saved_sites(app, test_organization):
 
     return site_wed, site_fri, site_mon
 
+####################################
+# Service #
+####################################
+@pytest.fixture
+def valid_service_dict():
+    return {
+        "name": "food_bank"
+    }
 
-# Seeding services. check this later@pytest.fixture
-# def seed_services(app):
-#     # Create developer-controlled lookup values
-#     services = [
-#         Service(name="Food Bank"),
-#         Service(name="Meal"),
-#     ]
+@pytest.fixture
+def valid_service():
+    return Service(
+        name="food_bank"
+    )
 
-#     for s in services:
-#         exists = Service.query.filter_by(name=s.name).first()
-#         if not exists:
-#             db.session.add(s)
+@pytest.fixture
+def two_saved_services(app):
+    # Arrange
+    service_one = Service(name="food_bank")
+    service_two = Service(name="meal")
 
-#     db.session.commit()
-#     return {s.name: Service.query.filter_by(name=s.name).first() for s in services}
+    db.session.add_all([service_one, service_two])
+    db.session.commit()
 
-
-# Site(
-#     name="Asian Counseling and Referral Service (ACRS)",
-#     status=SiteStatus.OPEN,
-#     address_line1="3639 Martin Luther King Jr Way S",
-#     address_line2=None,
-#     city="Seattle",
-#     state="WA",
-#     postal_code="98144",
-#     latitude=47.570897,
-#     longitude=-122.2973881,
-#     phone="(206)-695-7510",
-#     eligibility=Eligibility.OLDER_ADULTS_AND_ELIGIBLE,
-#     hours={
-#         "sunday": [],
-#         "monday": [{"open": "10:00", "close": "14:00"}],
-#         "tuesday": [{"open": "10:00", "close": "14:00"}],
-#         "wednesday": [{"open": "10:00", "close": "14:00"}],
-#         "thursday": [{"open": "10:00", "close": "14:00"}],
-#         "friday": [{"open": "10:00", "close": "14:00"}],
-#         "saturday": [],
-#     },
-#     service_notes="For more information, contact: Miquel Saldin (206) 695-7510",
-#     created_at=datetime.now(timezone.utc),
-#     updated_at=None,
-# )
 
 ####################################
 # Admin, Organization and register #

@@ -6,24 +6,11 @@ from app.models.service import Service
 from app.models.site_service import SiteService
 from ..db import db
 
-# VALID_DAYS = {
-#     "sunday",
-#     "monday",
-#     "tuesday",
-#     "wednesday",
-#     "thursday",
-#     "friday",
-#     "saturday",
-# }
-
-
 def is_open_on_day(day):
     return func.coalesce(func.jsonb_array_length(Site.hours.op("->")(day)), 0) > 0
 
 
 def apply_site_filters(query, filters):
-    if not filters:
-        return query
 
     # optional: day
     days = [day.lower() for day in filters.getlist("day")]
@@ -31,6 +18,8 @@ def apply_site_filters(query, filters):
     if days:
         query = query.where(or_(*[is_open_on_day(day) for day in days]))
 
+
+    # Work on this logic once services are added
     # optional: organization_type
     org_types = [
         OrgType.from_frontend(value) for value in filters.getlist("organization_type")
@@ -75,7 +64,7 @@ def validate_model(cls, model_id):
 #     try:
 #         new_model = cls.from_dict(model_data)
 #     except KeyError as error:
-#         invalid_msg = {"details": "Invalid data"}
+#         invalid_msg = {"details": f"Invalid data"}
 #         abort(make_response(invalid_msg, 400))
     
 #     db.session.add(new_model)
@@ -102,7 +91,8 @@ def get_models_with_filters(cls, filters=None):
     # find the nearby sites based on lat, lon, radius_miles
 
     # check other filters like day, organization_type, service_type
-    query = apply_site_filters(query, filters)
+    if filters:
+        query = apply_site_filters(query, filters)
 
     models = db.session.scalars(query.order_by(cls.id)).all()
     models_response = [model.to_dict() for model in models]

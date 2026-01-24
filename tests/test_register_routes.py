@@ -67,7 +67,7 @@ def test_invalid_org_type(client, payload_invalid_org_type):
 
     # Assert: HTTP response
     assert response.status_code == 400
-    assert response_body["details"] == "Invalid data"
+    assert response_body == {"details": "Invalid data: 'restaurant'"}
 
     # Assert: DB side effects (no new records)
     assert db.session.query(AdminUser).count() == 0
