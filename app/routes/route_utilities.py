@@ -22,7 +22,7 @@ def apply_site_filters(query, filters):
     # Work on this logic once services are added
     # optional: organization_type
     org_types = [
-        OrgType.from_frontend(value) for value in filters.getlist("organization_type")
+        OrgType(value) for value in filters.getlist("organization_type")
     ]
     if org_types:
         query = query.join(Organization).where(

@@ -81,7 +81,7 @@ def update_organization(org_id):
     for field in UPDATABLE_FIELDS:
         if field in request_body:
             if field == "organization_type":
-                organization.organization_type = OrgType.from_frontend(request_body["organization_type"])
+                organization.organization_type = OrgType(request_body["organization_type"])
             else:
                 setattr(organization, field, request_body[field])
     

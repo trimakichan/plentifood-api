@@ -54,9 +54,9 @@ def update_site(site_id):
     for field in UPDATABLE_FIELDS:
         if field in request_body:
             if field == "status":
-                site.status = SiteStatus.from_frontend(request_body["status"])
+                site.status = SiteStatus(request_body["status"])
             elif field == "eligibility":
-                site.eligibility = Eligibility.from_frontend(request_body["eligibility"])
+                site.eligibility = Eligibility(request_body["eligibility"])
             else:
                 setattr(site, field, request_body[field])
     
@@ -74,6 +74,3 @@ def delete_site(site_id):
     db.session.commit()
 
     return Response(status=204, mimetype="application/json")
-
-
-# Create logic to go get lat and lon based on address. 

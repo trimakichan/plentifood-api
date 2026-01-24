@@ -14,22 +14,14 @@ if TYPE_CHECKING:
 
 from ..db import db
 
-
 class SiteStatus(str, Enum):
     OPEN = "open"
     CLOSED = "closed"
-
-    # @classmethod
-    # def from_frontend(cls, value: str) -> "SiteStatus":
-    #     """Convert frontend format to SiteStatus enum"""
-    #     return cls(value)
-
-
 class Eligibility(str, Enum):
     GENERAL_PUBLIC = "general_public"
     OLDER_ADULTS_AND_ELIGIBLE = "older_adults_and_eligible"
     YOUTH_YOUNG_ADULTS = "youth_young_adults"
-    
+
 class Site(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     name: Mapped[str]
