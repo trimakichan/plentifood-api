@@ -46,7 +46,7 @@ def test_organization(app):
     """Create and save a test organization."""
     org = Organization(
         name="Test Organization",
-        organization_type=OrgType.FOOD_TYPE,
+        organization_type=OrgType.FOOD_BANK,
         website_url="https://test.org",
         created_at=datetime.now(timezone.utc),
     )
@@ -386,7 +386,7 @@ def payload_invalid_org_type():
 def organization_id(app):
     org = Organization(
         name="Test Organization",
-        organization_type=OrgType.FOOD_TYPE,
+        organization_type=OrgType.FOOD_BANK,
         website_url="https://test.org",
         created_at=datetime.now(timezone.utc),
     )

@@ -133,7 +133,7 @@ def test_get_organization_returns_200_org_dict_found(client, organization_id):
 
     assert data["id"] == organization_id
     assert data["name"] == "Test Organization"
-    assert data["organization_type"] == "food_bank"  # matches OrgType.FOOD_TYPE.value
+    assert data["organization_type"] == "food_bank"  # matches OrgType.FOOD_BANK.value
     assert data["website_url"] == "https://test.org"
 
 

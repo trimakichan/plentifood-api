@@ -10,7 +10,7 @@ if TYPE_CHECKING:
     from app.models.admin_user import AdminUser
 
 class OrgType(str, Enum):
-    FOOD_TYPE = "food_bank"
+    FOOD_BANK = "food_bank"
     CHURCH = "church"
     COMMUNITY_CENTER = "community_center"
     NON_PROFIT = "non_profit"
