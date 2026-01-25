@@ -298,7 +298,7 @@ def two_saved_services(app):
 
 
 ####################################
-# Admin, Organization and register #
+# Register - Admin + Organization #
 ####################################
 
 @pytest.fixture
@@ -378,3 +378,50 @@ def payload_invalid_org_type():
     }
     }
 
+####################################
+# Organization routes #
+####################################
+
+@pytest.fixture
+def organization_id(app):
+    org = Organization(
+        name="Test Organization",
+        organization_type=OrgType.FOOD_TYPE,
+        website_url="https://test.org",
+        created_at=datetime.now(timezone.utc),
+    )
+    db.session.add(org)
+    db.session.commit()
+    return org.id
+
+@pytest.fixture
+def valid_site_dict_no_param():
+    return {
+        "name": "Algona/Pacific Food Pantry - Food Distribution Center",
+        "address_line1": "603 3rd Ave SE",
+        "city": "Algona",
+        "state": "WA",
+        "postal_code": "98001",
+        "latitude": 47.265011,
+        "longitude": -122.236,
+        "phone": "123-456-7890",
+        "eligibility": "older_adults_and_eligible",
+        "hours": {
+            "sunday": [{"open": "10:00", "close": "14:00"}],
+            "monday": [{"open": "10:00", "close": "14:00"}],
+            "tuesday": [{"open": "10:00", "close": "14:00"}],
+            "wednesday": [],
+            "thursday": [{"open": "12:00", "close": "16:00"}],
+            "friday": [{"open": "10:00", "close": "13:00"}],
+            "saturday": [],
+        },
+        "service_notes": "No special notes",
+        "services": ["food_bank"]
+    }
+
+@pytest.fixture
+def food_bank_service(app):
+    service = Service(name="food_bank")
+    db.session.add(service)
+    db.session.commit()
+    return service.name  # or return service
