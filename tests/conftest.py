@@ -315,6 +315,7 @@ def valid_admin_user():
         created_at=datetime.now(timezone.utc),
     )
 
+
 @pytest.fixture
 def valid_organization_dict():
     return {
@@ -425,3 +426,19 @@ def food_bank_service(app):
     db.session.add(service)
     db.session.commit()
     return service.name  # or return service
+
+
+####################################
+# login routes #
+####################################
+@pytest.fixture
+def saved_admin_user():
+    admin = AdminUser(
+        username="test_admin",
+        created_at=datetime.now(timezone.utc),
+    )
+
+    db.session.add(admin)
+    db.session.commit()
+
+    return admin
