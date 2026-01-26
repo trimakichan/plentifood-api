@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String
+from sqlalchemy import Enum as SQLEnum
 from enum import Enum
 from datetime import datetime, timezone
 from typing import Optional, TYPE_CHECKING
@@ -15,10 +16,18 @@ class OrgType(str, Enum):
     COMMUNITY_CENTER = "community_center"
     NON_PROFIT = "non_profit"
     OTHERS = "others"
+
 class Organization(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String(100))
-    organization_type: Mapped[OrgType] 
+    # Create and use a Postgres enum called orgtype 
+    # whose values come from Python enum’s .value strings instead of the enum names.
+    organization_type: Mapped[OrgType] = mapped_column(SQLEnum(
+        OrgType,
+        values_callable=lambda enum_class: [member.value for member in enum_class],
+        name="orgtype",
+        ),
+        nullable=False)
     website_url: Mapped[Optional[str]] = mapped_column(String(255))
     sites: Mapped[list["Site"]] = relationship(
         "Site",

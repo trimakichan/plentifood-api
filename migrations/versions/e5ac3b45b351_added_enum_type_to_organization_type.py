@@ -1,8 +1,8 @@
-"""Recreate model migrations
+"""added enum type to organization type
 
-Revision ID: 0961c3c1aa4e
+Revision ID: e5ac3b45b351
 Revises: 
-Create Date: 2026-01-22 20:05:59.270841
+Create Date: 2026-01-26 15:26:12.857615
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = '0961c3c1aa4e'
+revision = 'e5ac3b45b351'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,7 +21,7 @@ def upgrade():
     op.create_table('organization',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('name', sa.String(length=100), nullable=False),
-    sa.Column('organization_type', sa.Enum('FOOD_TYPE', 'CHURCH', 'COMMUNITY_CENTER', 'NON_PROFIT', 'OTHERS', name='orgtype'), nullable=False),
+    sa.Column('organization_type', sa.Enum('food_bank', 'church', 'community_center', 'non_profit', 'others', name='orgtype'), nullable=False),
     sa.Column('website_url', sa.String(length=255), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
