@@ -10,7 +10,8 @@ from app.routes.home_routes import bp as home_bp
 from app.routes.site_routes import bp as site_bp
 from app.routes.register_routes import bp as register_bp
 from app.routes.organization_routes import bp as organization_bp
-from app.routes.service_routes import bp as service_bp  
+from app.routes.service_routes import bp as service_bp
+from app.routes.login_routes import bp as login_bp
 
 def create_app(config=None):
     app = Flask(__name__)
@@ -30,5 +31,6 @@ def create_app(config=None):
     app.register_blueprint(register_bp)
     app.register_blueprint(organization_bp)
     app.register_blueprint(service_bp)
+    app.register_blueprint(login_bp)
 
     return app
