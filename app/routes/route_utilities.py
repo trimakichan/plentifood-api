@@ -96,5 +96,5 @@ def get_models_with_filters(cls, filters=None):
 
     models = db.session.scalars(query.order_by(cls.id)).all()
     models_response = [model.to_dict() for model in models]
-    return models_response
+    return {"results": len(models_response), f"{cls.__name__}s": models_response}
 
