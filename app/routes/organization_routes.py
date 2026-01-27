@@ -6,6 +6,7 @@ from ..models.service import Service
 from .route_utilities import validate_model, get_models_with_filters
 from ..services.locationiq import get_coordinates
 from ..db import db
+from sqlalchemy.exc import DataError
 
 bp = Blueprint("organizations_bp", __name__, url_prefix="/organizations")
 
@@ -28,6 +29,12 @@ def create_site(org_id):
 
         new_site = Site.from_dict(request_body, org_id=organization.id)
         service_names = request_body["services"]
+
+        # pull allowed enom strings from the mapped column
+        allowed = set(Service.__table__.c.name.type.enums)
+        if any(name not in allowed for name in service_names):
+            abort(make_response({"details": "One or more services are invalid."}, 400))
+
     except KeyError as error:
         invalid_msg = {"details": f"Invalid data: {error}"}
         abort(make_response(invalid_msg, 400))
@@ -35,9 +42,12 @@ def create_site(org_id):
         invalid_msg = {"details": str(e)}
         abort(make_response(invalid_msg, 502))
 
-    services = db.session.scalars(
+    try: 
+        services = db.session.scalars(
                 db.select(Service).where(Service.name.in_(service_names))
-            ).all()
+        ).all()
+    except DataError:
+        abort(make_response({"details": "One or more services are invalid."}, 400))
     
     if len(services) != len(service_names):
         invalid_msg = {"details": "One or more services are invalid."}
