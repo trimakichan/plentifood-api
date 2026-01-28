@@ -28,7 +28,9 @@ def get_nearby_sites():
         if param not in request.args:
             abort(400, description=f"Missing required parameter: {param}")
 
-    return get_models_with_filters(Site, filters=request.args)
+        results = get_models_with_filters(Site, filters=request.args)
+
+    return {"total_results": len(results), "results": results}
 
 
 def get_site(site_id):

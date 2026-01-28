@@ -11,7 +11,7 @@ def test_get_nearby_sites_with_no_records(client):
 
     # Assert
     assert response.status_code == 200
-    assert response_body == []
+    assert response_body == {"total_results": 0, "results": []}
 
 def test_get_nearby_sites_with_two_sites(client, two_saved_sites):
     # Act
@@ -20,13 +20,13 @@ def test_get_nearby_sites_with_two_sites(client, two_saved_sites):
 
     # Assert
     assert response.status_code == 200
-    assert len(response_body) == 2
+    assert response_body["total_results"] == 2
 
     query = db.select(Site).order_by(Site.id)
     sites = db.session.scalars(query).all()
 
-    assert response_body[0] == sites[0].to_dict()
-    assert response_body[1] == sites[1].to_dict()
+    assert response_body["results"][0] == sites[0].to_dict()
+    assert response_body["results"][1] == sites[1].to_dict()
 
 
 def test_nearby_filter_day_single_wednesday(client, three_saved_sites):
@@ -34,7 +34,7 @@ def test_nearby_filter_day_single_wednesday(client, three_saved_sites):
     assert resp.status_code == 200
     data = resp.get_json()
 
-    names = {s["name"] for s in data}
+    names = {s["name"] for s in data["results"]}
     assert names == {"Wed Site"}
 
 
@@ -43,7 +43,7 @@ def test_nearby_filter_day_single_friday(client, three_saved_sites):
     assert resp.status_code == 200
     data = resp.get_json()
 
-    names = {s["name"] for s in data}
+    names = {s["name"] for s in data["results"]}
     assert names == {"Fri Site"}
 
 
@@ -52,7 +52,7 @@ def test_nearby_filter_day_multiple_or(client, three_saved_sites):
     assert resp.status_code == 200
     data = resp.get_json()
 
-    names = {s["name"] for s in data}
+    names = {s["name"] for s in data["results"]}
     assert names == {"Wed Site", "Fri Site"}
 
 # --------------get_site tests--------------

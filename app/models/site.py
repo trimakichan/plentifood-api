@@ -101,5 +101,10 @@ class Site(db.Model):
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,
         }
 
+        site_as_dict["organization_id"] = self.organization_id
+        site_as_dict["organization_name"] = self.organization.name if self.organization else None
+        site_as_dict["organization_type"] = self.organization.organization_type.value if self.organization else None
+        site_as_dict["organization_website_url"] = self.organization.website_url if self.organization and self.organization.website_url else None
+
         return site_as_dict
 
