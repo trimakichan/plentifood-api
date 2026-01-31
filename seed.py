@@ -22,7 +22,8 @@ with my_app.app_context():
     for org_data in data:
         organization = Organization.from_dict(org_data["register"]["organization"])
         db.session.add(organization)
-        db.session.flush()  # Get organization.id before committing
+        # Get organization.id before committing
+        db.session.flush() 
 
         # Seed Admin
         admin = AdminUser.from_dict(org_data["register"]["admin"])

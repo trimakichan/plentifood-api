@@ -92,6 +92,10 @@ def update_organization(org_id):
         if field in request_body:
             if field == "organization_type":
                 organization.organization_type = OrgType(request_body["organization_type"])
+            elif field == "website_url":
+                # Convert empty string to None (which becomes null in JSON)
+                value = request_body[field]
+                setattr(organization, field, None if value == "" else value)
             else:
                 setattr(organization, field, request_body[field])
     

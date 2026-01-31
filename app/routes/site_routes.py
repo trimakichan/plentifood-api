@@ -32,11 +32,6 @@ def get_nearby_sites():
 
     return {"total_results": len(results), "results": results}
 
-
-def get_site(site_id):
-    site = validate_model(Site, site_id)
-    return site.to_dict()
-
 @bp.get("/<site_id>")
 def get_site(site_id):
     site = validate_model(Site, site_id)

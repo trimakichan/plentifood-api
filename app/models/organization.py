@@ -45,10 +45,14 @@ class Organization(db.Model):
 
     @classmethod
     def from_dict(cls, organization_dict):
+        website_url = organization_dict.get("website_url")
+        # Convert empty string to None (which becomes null in JSON)
+        if website_url == "":
+            website_url = None
         return cls(
             name=organization_dict["name"],
             organization_type=OrgType(organization_dict["organization_type"]),
-            website_url=organization_dict.get("website_url"),
+            website_url=website_url,
             created_at=datetime.now(timezone.utc)
         )
 
