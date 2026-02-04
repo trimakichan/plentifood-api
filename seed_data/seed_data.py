@@ -2221,644 +2221,113 @@ data = [
             }
         ],
     },
+
+     {
+        "register": {
+            "organization": {
+                "name": "Urban Fresh Food Collective of South Park",
+                "organization_type": "community_center",
+            },
+            "admin": {"username": "UrbanChick"},
+        },
+        "site": [
+            {
+                "name": "Duwamish River Community Hub",
+                "address_line1": "8600 14th Ave S.",
+                "city": "Seattle",
+                "state": "WA",
+                "postal_code": "98108",
+                "latitude": 47.5262667,
+                "longitude": -122.3147529,
+                "phone": "(206)-123-4567",
+                "eligibility": "general_public",
+                "services": ["food_bank"],
+                "hours": {
+                    "sunday": [],
+                    "monday": [],
+                    "tuesday": [{"open": "09:00", "close": "18:00"}],
+                    "wednesday": [],
+                    "thursday": [],
+                    "friday": [],
+                    "saturday": [],
+                },
+                "service_notes": "Submit an application online to be contacted with details about the farmer's market.",
+            },
+            {
+                "name": "South Park Community Center",
+                "address_line1": "8319 8th Ave S",
+                "city": "Seattle",
+                "state": "WA",
+                "postal_code": "98108",
+                "latitude":47.5284221,
+                "longitude": -122.3240431,
+                "phone": "(206)-809-9691",
+                "eligibility": "general_public",
+                "services": ["meal"],
+                "hours": {
+                    "sunday": [],
+                    "monday": [{"open": "09:00", "close": "18:00"}],
+                    "tuesday": [],
+                    "wednesday": [{"open": "09:00", "close": "18:00"}],
+                    "thursday": [{"open": "09:00", "close": "18:00"}],
+                    "friday": [],
+                    "saturday": [],
+                },
+                "service_notes": "Phone number listed accepts texts in English and Spanish",
+            }
+        ],
+    },
 ]
 
+#  {
+#     "food_resource_type": "Meal",
+#     "agency": "Ukrainian Community Center",
+#     "location": "Iraqi Community Center of Washington",
+#     "operational_status": "Open",
+#     "operational_notes": "This information is for the work Iraqi Community Center is doing: Please contact them for home delivery needs",
+#     "who_they_serve": "General Public",
+#     "address": "11010 SE 248th St, Kent, WA 98030",
+#     "latitude": "47.3811974",
+#     "longitude": "-122.1937157",
+#     "phone_number": "(253)-243-7744",
+#     "website": {
+#       "url": "http://uccwa.org/"
+#     },
+#     "date_updated": "8/5/2025"
+#   },
+#   {
+#     "food_resource_type": "Meal",
+#     "agency": "Ukrainian Community Center",
+#     "location": "Ukrainian Community Center of WA - Federal Way",
+#     "operational_status": "Open",
+#     "operational_notes": "Please call ahead for availability",
+#     "who_they_serve": "Older Adults 60+ and Eligible Participants",
+#     "address": "1430 S 330th St, Federal Way, WA 98003",
+#     "latitude": "47.3067079",
+#     "longitude": "-122.3154071",
+#     "phone_number": "(425)-430-8229",
+#     "website": {
+#       "url": "http://uccwa.org/"
+#     },
+#     "days_hours": "Thursday",
+#     "date_updated": "8/5/2025"
+#   },
+#   {
+#     "food_resource_type": "Meal",
+#     "agency": "Ukrainian Community Center",
+#     "location": "Ukrainian Community Center of WA - Seattle",
+#     "operational_status": "Open",
+#     "operational_notes": "Lunch served Monday through Friday for seniors. Transportation is available to those who need it.",
+#     "who_they_serve": "Older Adults 60+ and Eligible Participants",
+#     "address": "13470 Martin Luther King Jr Way S #5210, Seattle, WA 98178",
+#     "latitude": "47.7240367",
+#     "longitude": "-122.3486525",
+#     "phone_number": "(425)-430-8229",
+#     "website": {
+#       "url": "http://uccwa.org/"
+#     },
+#     "days_hours": "Tuesday",
+#     "date_updated": "8/5/2025"
+#   },
 
-# data = [
-#     {
-#         "register": {
-#             "organization": {
-#                 "name": "Asian Counseling and Referral Service (ACRS)",
-#                 "organization_type": "non_profit",
-#                 "website_url": "http://www.acrs.org/services/aging-services-for-older-adults/senior-lunch-programs/",
-#             },
-#             "admin": {"username": "Maya"},
-#         },
-#         "site": [
-#             {
-#                 "name": "Korean Senior Club Miller Community Center",
-#                 "address_line1": "330 19th Ave E",
-#                 "city": "Seattle",
-#                 "state": "WA",
-#                 "postal_code": "98122",
-#                 "latitude": 47.6219158,
-#                 "longitude": -122.3069784,
-#                 "phone": "(206)-695-7510",
-#                 "eligibility": "older_adults_and_eligible",
-#                 "hours": {
-#                     "sunday": [],
-#                     "monday": [],
-#                     "tuesday": [{"open": "10:00", "close": "14:00"}],
-#                     "wednesday": [],
-#                     "thursday": [],
-#                     "friday": [{"open": "10:00", "close": "14:00"}],
-#                     "saturday": [],
-#                 },
-#                 "service_notes": "For more information, contact: Miquel Saldin (206) 695-7510",
-#                 "services": ["meal"],
-#             }
-#         ],
-#     },
-#     {
-#         "register": {
-#             "organization": {
-#                 "name": "Atrium Kitchen",
-#                 "organization_type": "others",
-#                 "website_url": "http://www.atriumkitchenpikeplace.com/",
-#             },
-#             "admin": {"username": "Joy"},
-#         },
-#         "site": [
-#             {
-#                 "name": "Atrium Kitchen",
-#                 "address_line1": "93 Pike Street",
-#                 "address_line2": "Suite 101",
-#                 "city": "Seattle",
-#                 "state": "WA",
-#                 "postal_code": "98101",
-#                 "latitude": 47.608632,
-#                 "longitude": -122.3401409,
-#                 "phone": "(206)-829-9525",
-#                 "eligibility": "older_adults_and_eligible",
-#                 "hours": {
-#                     "sunday": [],
-#                     "monday": [],
-#                     "tuesday": [],
-#                     "wednesday": [],
-#                     "thursday": [{"open": "12:00", "close": "16:00"}],
-#                     "friday": [],
-#                     "saturday": [],
-#                 },
-#                 "service_notes": "First Thursday of every month",
-#                 "services": ["meal"],
-#             }
-#         ],
-#     },
-#     {
-#         "register": {
-#             "organization": {
-#                 "name": "Bread of Life Mission",
-#                 "organization_type": "non_profit",
-#                 "website_url": "https://www.breadoflifemission.org/emergency-services",
-#             },
-#             "admin": {"username": "Noah"},
-#         },
-#         "site": [
-#             {
-#                 "name": "Bread of Life Mission",
-#                 "address_line1": "97 South Main Street",
-#                 "city": "Seattle",
-#                 "state": "WA",
-#                 "postal_code": "98104",
-#                 "latitude": 47.5999268,
-#                 "longitude": -122.334605,
-#                 "phone": "(206)-682-3579",
-#                 "eligibility": "general_public",
-#                 "hours": {
-#                     "sunday": [],
-#                     "monday": [{"open": "10:00", "close": "14:00"}],
-#                     "tuesday": [{"open": "10:00", "close": "14:00"}],
-#                     "wednesday": [{"open": "10:00", "close": "14:00"}],
-#                     "thursday": [{"open": "10:00", "close": "14:00"}],
-#                     "friday": [{"open": "10:00", "close": "14:00"}],
-#                     "saturday": [],
-#                 },
-#                 "service_notes": "Hot meals, coffee, water & pastries",
-#                 "services": ["meal"],
-#             }
-#         ],
-#     },
-#     {
-#         "register": {
-#             "organization": {
-#                 "name": "Byrd Barr Place",
-#                 "organization_type": "non_profit",
-#                 "website_url": "http://www.byrdbarrplace.org/programs-services/food-bank/",
-#             },
-#             "admin": {"username": "Liam"},
-#         },
-#         "site": [
-#             {
-#                 "name": "The Market",
-#                 "address_line1": "722 18th Avenue",
-#                 "city": "Seattle",
-#                 "state": "WA",
-#                 "postal_code": "98122",
-#                 "latitude": 47.6088532,
-#                 "longitude": -122.3085629,
-#                 "phone": "(206)-812-4940",
-#                 "eligibility": "general_public",
-#                 "hours": {
-#                     "sunday": [],
-#                     "monday": [],
-#                     "tuesday": [{"open": "10:00", "close": "14:00"}],
-#                     "wednesday": [{"open": "10:00", "close": "14:00"}],
-#                     "thursday": [{"open": "10:00", "close": "14:00"}],
-#                     "friday": [],
-#                     "saturday": [],
-#                 },
-#                 "service_notes": "Food bank is open three days a week for people to select food and non-grocery essentials. The Market hours are: Tuesday 11am-4pm, Wednesday 12-4pm, and Thursday 10am-2pm. If you are unable to travel to the location and live in the 98102, 98112, or 98122 zip codes, call 206-812-4940 for home delivery.",
-#                 "services": ["food_bank"],
-#             }
-#         ],
-#     },
-#     {
-#         "register": {
-#             "organization": {
-#                 "name": "First Covenant Church",
-#                 "organization_type": "church",
-#                 "website_url": "http://www.firstcovenantseattle.org/outreach",
-#             },
-#             "admin": {"username": "Emma"},
-#         },
-#         "site": [
-#             {
-#                 "name": "First Covenant Church",
-#                 "address_line1": "400 E Pike St",
-#                 "city": "Seattle",
-#                 "state": "WA",
-#                 "postal_code": "98122",
-#                 "latitude": 47.6142392,
-#                 "longitude": -122.3263239,
-#                 "phone": "(206)-322-7411",
-#                 "eligibility": "general_public",
-#                 "hours": {
-#                     "sunday": [],
-#                     "monday": [],
-#                     "tuesday": [],
-#                     "wednesday": [],
-#                     "thursday": [],
-#                     "friday": [],
-#                     "saturday": [{"open": "10:00", "close": "14:00"}],
-#                 },
-#                 "service_notes": "Preparing hot breakfast sandwiches and bag lunches, ask guests to line up 6 feet apart",
-#                 "services": ["meal"],
-#             }
-#         ],
-#     },
-#     {
-#         "register": {
-#             "organization": {
-#                 "name": "First United Methodist Church of Seattle",
-#                 "organization_type": "church",
-#                 "website_url": "http://www.firstchurchseattle.org/shared-breakfast/?fbclid=IwAR2EAykPB90--700TuZeuY3aX18yx3tXkg9lbCW8qVghb3RgTCJJnwkB7wQ",
-#             },
-#             "admin": {"username": "Ava"},
-#         },
-#         "site": [
-#             {
-#                 "name": "First United Methodist Church of Seattle",
-#                 "address_line1": "180 Denny Way",
-#                 "city": "Seattle",
-#                 "state": "WA",
-#                 "postal_code": "98109",
-#                 "latitude": 47.6188068,
-#                 "longitude": -122.3531962,
-#                 "phone": "(206)-622-7278",
-#                 "eligibility": "general_public",
-#                 "hours": {
-#                     "sunday": [{"open": "10:00", "close": "14:00"}],
-#                     "monday": [],
-#                     "tuesday": [],
-#                     "wednesday": [],
-#                     "thursday": [],
-#                     "friday": [],
-#                     "saturday": [],
-#                 },
-#                 "service_notes": "Shared Breakfast",
-#                 "services": ["meal"],
-#             }
-#         ],
-#     },
-#     {
-#         "register": {
-#             "organization": {
-#                 "name": "Food Not Bombs - Seattle",
-#                 "organization_type": "non_profit",
-#                 "website_url": "http://www.seattlefoodnotbombs.org/?fbclid=IwAR3T68e9asOm5ksmU_CuHK8ppZZir1QFQBRn_HbSvUCNvhDb7sGxeFXhr_g",
-#             },
-#             "admin": {"username": "Ethan"},
-#         },
-#         "site": [
-#             {
-#                 "name": "Occidental Park",
-#                 "address_line1": "Occidental Ave S and S Main St",
-#                 "city": "Seattle",
-#                 "state": "WA",
-#                 "postal_code": "98104",
-#                 "latitude": 47.6000475,
-#                 "longitude": -122.3328885,
-#                 "phone": "(206)-397-6815",
-#                 "eligibility": "general_public",
-#                 "hours": {
-#                     "sunday": [{"open": "10:00", "close": "14:00"}],
-#                     "monday": [],
-#                     "tuesday": [],
-#                     "wednesday": [],
-#                     "thursday": [],
-#                     "friday": [],
-#                     "saturday": [{"open": "10:00", "close": "14:00"}],
-#                 },
-#                 "service_notes": "Free vegetarian meal",
-#                 "services": ["meal"],
-#             }
-#         ],
-#     },
-#     {
-#         "register": {
-#             "organization": {
-#                 "name": "Immanuel Community Services",
-#                 "organization_type": "non_profit",
-#                 "website_url": "http://www.icsseattle.org/covid-19-info/",
-#             },
-#             "admin": {"username": "Sofia"},
-#         },
-#         "site": [
-#             {
-#                 "name": "Immanuel Community Services Food Bank and Community Lunch",
-#                 "address_line1": "1215 Thomas",
-#                 "city": "Seattle",
-#                 "state": "WA",
-#                 "postal_code": "98109",
-#                 "latitude": 47.6206572,
-#                 "longitude": -122.3321098,
-#                 "phone": "(206)-622-1930",
-#                 "eligibility": "general_public",
-#                 "hours": {
-#                     "sunday": [{"open": "10:00", "close": "14:00"}],
-#                     "monday": [{"open": "10:00", "close": "14:00"}],
-#                     "tuesday": [],
-#                     "wednesday": [],
-#                     "thursday": [],
-#                     "friday": [],
-#                     "saturday": [],
-#                 },
-#                 "service_notes": "Home delivery is available through website link. Hygiene Center is still open from 8am to 2pm on weekdays. Food bank is still open Mondays at 10:00am-1:00pm. Community Lunch the last Sunday of each month 12:00-2:00pm. If you are unable to leave your home & need food, please email info@icsseattleorg",
-#                 "services": ["food_bank", "meal"],
-#             }
-#         ],
-#     },
-#     {
-#         "register": {
-#             "organization": {
-#                 "name": "Jewish Family Service",
-#                 "organization_type": "non_profit",
-#                 "website_url": "http://www.jfsseattle.org/get-help/polack-food-bank/",
-#             },
-#             "admin": {"username": "Olivia"},
-#         },
-#         "site": [
-#             {
-#                 "name": "Polack Food Bank",
-#                 "address_line1": "1601 16th Ave",
-#                 "city": "Seattle",
-#                 "state": "WA",
-#                 "postal_code": "98122",
-#                 "latitude": 47.6155896,
-#                 "longitude": -122.3118419,
-#                 "phone": "(206)-461-3240",
-#                 "eligibility": "general_public",
-#                 "hours": {
-#                     "sunday": [],
-#                     "monday": [],
-#                     "tuesday": [],
-#                     "wednesday": [{"open": "10:00", "close": "14:00"}],
-#                     "thursday": [{"open": "10:00", "close": "14:00"}],
-#                     "friday": [{"open": "10:00", "close": "14:00"}],
-#                     "saturday": [],
-#                 },
-#                 "service_notes": "In-person shopping. All visitors must complete an intake during the first visit. ID is helpful but not required for the intake process. Visitors can access food bank one time per week. Kosher food is available.",
-#                 "services": ["food_bank"],
-#             }
-#         ],
-#     },
-#     {
-#         "register": {
-#             "organization": {
-#                 "name": "Operation Sack Lunch, Inc.",
-#                 "organization_type": "non_profit",
-#                 "website_url": "http://www.oslserves.org/",
-#             },
-#             "admin": {"username": "Kai"},
-#         },
-#         "site": [
-#             {
-#                 "name": "Compass Housing",
-#                 "address_line1": "210 Alaskan Way S",
-#                 "city": "Seattle",
-#                 "state": "WA",
-#                 "postal_code": "98104",
-#                 "latitude": 47.60104542,
-#                 "longitude": -122.3353162,
-#                 "phone": "(206)-347-6629",
-#                 "eligibility": "general_public",
-#                 "hours": {
-#                     "sunday": [],
-#                     "monday": [{"open": "10:00", "close": "14:00"}],
-#                     "tuesday": [{"open": "10:00", "close": "14:00"}],
-#                     "wednesday": [{"open": "10:00", "close": "14:00"}],
-#                     "thursday": [{"open": "10:00", "close": "14:00"}],
-#                     "friday": [{"open": "10:00", "close": "14:00"}],
-#                     "saturday": [{"open": "10:00", "close": "14:00"}],
-#                 },
-#                 "service_notes": "**ALL ARE WELCOME AT THE OPEN MEAL SERVICE (oms)**",
-#                 "services": ["meal"],
-#             }
-#         ],
-#     },
-#     {
-#         "register": {
-#             "organization": {
-#                 "name": "Pike Market Senior Center",
-#                 "organization_type": "community_center",
-#                 "website_url": "http://www.pmsc-fb.org/",
-#             },
-#             "admin": {"username": "Mia"},
-#         },
-#         "site": [
-#             {
-#                 "name": "Pike Market Senior Center",
-#                 "address_line1": "85 Pike Street",
-#                 "city": "Seattle",
-#                 "state": "WA",
-#                 "postal_code": "98101",
-#                 "latitude": 47.6084268,
-#                 "longitude": -122.3405616,
-#                 "phone": "(206)-728-2773",
-#                 "eligibility": "older_adults_and_eligible",
-#                 "hours": {
-#                     "sunday": [{"open": "10:00", "close": "14:00"}],
-#                     "monday": [{"open": "10:00", "close": "14:00"}],
-#                     "tuesday": [{"open": "10:00", "close": "14:00"}],
-#                     "wednesday": [{"open": "10:00", "close": "14:00"}],
-#                     "thursday": [{"open": "10:00", "close": "14:00"}],
-#                     "friday": [{"open": "10:00", "close": "14:00"}],
-#                     "saturday": [{"open": "10:00", "close": "14:00"}],
-#                 },
-#                 "service_notes": "Food Banks Hours: Tuesday 12pm-3pm, Wednesday 3pm-7pm, Thursday 12pm-3pm. Meals: Breakfast daily 8:20am-9am, Lunch Mon-Fri 12pm-1pm, Weekends 11:30am-12:30pm. Closed 1st Thursday of each month.",
-#                 "services": ["food_bank", "meal"],
-#             }
-#         ],
-#     },
-#     {
-#         "register": {
-#             "organization": {
-#                 "name": "Recovery Café",
-#                 "organization_type": "non_profit",
-#                 "website_url": "http://www.recoverycafe.org/",
-#             },
-#             "admin": {"username": "Aria"},
-#         },
-#         "site": [
-#             {
-#                 "name": "South Lake Union",
-#                 "address_line1": "2022 Boren Ave",
-#                 "city": "Seattle",
-#                 "state": "WA",
-#                 "postal_code": "98121",
-#                 "latitude": 47.618348,
-#                 "longitude": -122.3346308,
-#                 "phone": "(206)-374-8731",
-#                 "eligibility": "general_public",
-#                 "hours": {
-#                     "sunday": [],
-#                     "monday": [],
-#                     "tuesday": [{"open": "12:00", "close": "16:00"}],
-#                     "wednesday": [{"open": "12:00", "close": "16:00"}],
-#                     "thursday": [{"open": "12:00", "close": "16:00"}],
-#                     "friday": [{"open": "12:00", "close": "16:00"}],
-#                     "saturday": [{"open": "12:00", "close": "16:00"}],
-#                 },
-#                 "service_notes": "Sit down lunch and dinner is available at Recovery Café South Lake Union: Lunch is served Tuesday through Saturday from 12:30pm to 3pm. Dinner is served Tuesday through Saturday from 5pm to 6pm.",
-#                 "services": ["meal"],
-#             }
-#         ],
-#     },
-#     {
-#         "register": {
-#             "organization": {
-#                 "name": "Sacred Heart Church/SVDP Society",
-#                 "organization_type": "church",
-#                 "website_url": "http://www.sacredheartseattle.org/qafb",
-#             },
-#             "admin": {"username": "Leo"},
-#         },
-#         "site": [
-#             {
-#                 "name": "Queen Anne Food Bank and Meals",
-#                 "address_line1": "232 Warren Ave N",
-#                 "address_line2": "Suite B",
-#                 "city": "Seattle",
-#                 "state": "WA",
-#                 "postal_code": "98109",
-#                 "latitude": 47.6206989,
-#                 "longitude": -122.3537259,
-#                 "phone": "(206)-216-4102",
-#                 "eligibility": "general_public",
-#                 "hours": {
-#                     "sunday": [],
-#                     "monday": [{"open": "10:00", "close": "14:00"}],
-#                     "tuesday": [{"open": "10:00", "close": "14:00"}],
-#                     "wednesday": [{"open": "10:00", "close": "14:00"}],
-#                     "thursday": [{"open": "10:00", "close": "14:00"}],
-#                     "friday": [{"open": "10:00", "close": "14:00"}],
-#                     "saturday": [],
-#                 },
-#                 "service_notes": "Meals: High protein sandwiches, yogurt, fruit, bread, pastries, and hot soups. Thursdays shop for free.",
-#                 "services": ["food_bank", "meal"],
-#             }
-#         ],
-#     },
-#     {
-#         "register": {
-#             "organization": {
-#                 "name": "Sound Generations & SPS",
-#                 "organization_type": "non_profit",
-#                 "website_url": "http://www.soundgenerations.org/our-programs/food-security/community-dining/",
-#             },
-#             "admin": {"username": "Nina"},
-#         },
-#         "site": [
-#             {
-#                 "name": "Yesler Community Center",
-#                 "address_line1": "917 E Yesler Way",
-#                 "city": "Seattle",
-#                 "state": "WA",
-#                 "postal_code": "98122",
-#                 "latitude": 47.60151,
-#                 "longitude": -122.3202219,
-#                 "phone": "(206)-227-8659",
-#                 "eligibility": "older_adults_and_eligible",
-#                 "hours": {
-#                     "sunday": [],
-#                     "monday": [{"open": "10:00", "close": "14:00"}],
-#                     "tuesday": [],
-#                     "wednesday": [],
-#                     "thursday": [{"open": "10:00", "close": "14:00"}],
-#                     "friday": [],
-#                     "saturday": [],
-#                 },
-#                 "service_notes": "East African Senior Meal Program: Please call ahead for availability. Suggested donation of $3-$5 for those 60 and older.",
-#                 "services": ["meal"],
-#             }
-#         ],
-#     },
-#     {
-#         "register": {
-#             "organization": {
-#                 "name": "St. James Cathedral",
-#                 "organization_type": "church",
-#                 "website_url": "http://www.stjames-cathedral.org/outreach/kitchen.aspx",
-#             },
-#             "admin": {"username": "Grace"},
-#         },
-#         "site": [
-#             {
-#                 "name": "Cathedral Kitchen",
-#                 "address_line1": "804 9th Ave",
-#                 "city": "Seattle",
-#                 "state": "WA",
-#                 "postal_code": "98104",
-#                 "latitude": 47.607646,
-#                 "longitude": -122.3259157,
-#                 "phone": "(206)-264-2091",
-#                 "eligibility": "general_public",
-#                 "hours": {
-#                     "sunday": [],
-#                     "monday": [{"open": "10:00", "close": "14:00"}],
-#                     "tuesday": [{"open": "10:00", "close": "14:00"}],
-#                     "wednesday": [{"open": "10:00", "close": "14:00"}],
-#                     "thursday": [{"open": "10:00", "close": "14:00"}],
-#                     "friday": [{"open": "10:00", "close": "14:00"}],
-#                     "saturday": [],
-#                 },
-#                 "service_notes": "The day begins at 8:30 am each weekday. Two gleaners drive around Seattle collecting produce, deli meats, and dairy from various grocery stores for the meals that are prepared and served to guests five days a week, all year round (except Christmas Day).",
-#                 "services": ["meal"],
-#             },
-#             {
-#                 "name": "Sunday Breakfast",
-#                 "address_line1": "804 9th Ave",
-#                 "city": "Seattle",
-#                 "state": "WA",
-#                 "postal_code": "98104",
-#                 "latitude": 47.60752564,
-#                 "longitude": -122.3252976,
-#                 "phone": "(206)-382-4235",
-#                 "eligibility": "general_public",
-#                 "hours": {
-#                     "sunday": [{"open": "10:00", "close": "14:00"}],
-#                     "monday": [],
-#                     "tuesday": [],
-#                     "wednesday": [],
-#                     "thursday": [],
-#                     "friday": [{"open": "10:00", "close": "14:00"}],
-#                     "saturday": [],
-#                 },
-#                 "service_notes": "To-go only; guests may not arrive before 7am, and may not stay on-site after receiving a meal",
-#                 "services": ["meal"],
-#             },
-#         ],
-#     },
-#     {
-#         "register": {
-#             "organization": {
-#                 "name": "YouthCare",
-#                 "organization_type": "non_profit",
-#                 "website_url": "http://www.youthcare.org/homeless-youth-services/engagement-services/youthcares-orion-center/",
-#             },
-#             "admin": {"username": "Owen"},
-#         },
-#         "site": [
-#             {
-#                 "name": "Orion Center",
-#                 "address_line1": "1828 Yale Ave",
-#                 "city": "Seattle",
-#                 "state": "WA",
-#                 "postal_code": "98101",
-#                 "latitude": 47.6182683,
-#                 "longitude": -122.3305192,
-#                 "phone": "(206)-622-5555",
-#                 "eligibility": "youth_young_adults",
-#                 "hours": {
-#                     "sunday": [{"open": "10:00", "close": "14:00"}],
-#                     "monday": [{"open": "10:00", "close": "14:00"}],
-#                     "tuesday": [{"open": "10:00", "close": "14:00"}],
-#                     "wednesday": [{"open": "10:00", "close": "14:00"}],
-#                     "thursday": [{"open": "10:00", "close": "14:00"}],
-#                     "friday": [{"open": "10:00", "close": "14:00"}],
-#                     "saturday": [{"open": "10:00", "close": "14:00"}],
-#                 },
-#                 "service_notes": "Warm meals for breakfast, lunch, and dinner",
-#                 "services": ["meal"],
-#             }
-#         ],
-#     },
-#     {
-#         "register": {
-#             "organization": {
-#                 "name": "YWCA",
-#                 "organization_type": "non_profit",
-#                 "website_url": "http://www.ywcaworks.org/programs/central-area-food-bank",
-#             },
-#             "admin": {"username": "Hana"},
-#         },
-#         "site": [
-#             {
-#                 "name": "Central Area Food Bank",
-#                 "address_line1": "2820 E Cherry Street",
-#                 "city": "Seattle",
-#                 "state": "WA",
-#                 "postal_code": "98122",
-#                 "latitude": 47.608328,
-#                 "longitude": -122.2958409,
-#                 "phone": "(206)-375-1496",
-#                 "eligibility": "general_public",
-#                 "hours": {
-#                     "sunday": [],
-#                     "monday": [],
-#                     "tuesday": [],
-#                     "wednesday": [{"open": "13:00", "close": "15:00"}],
-#                     "thursday": [],
-#                     "friday": [],
-#                     "saturday": [],
-#                 },
-#                 "service_notes": "Hours 1pm-3pm\nFood Bank Coordinator Megan Boyce-Jacobs foodbank@ywcaworks.org",
-#                 "services": ["food_bank"],
-#             }
-#         ],
-#     },
-#     {
-#         "register": {
-#             "organization": {
-#                 "name": "Community Lunch on Capitol Hill",
-#                 "organization_type": "non_profit",
-#                 "website_url": "http://www.communitylunch.org/about-1",
-#             },
-#             "admin": {"username": "Rin"},
-#         },
-#         "site": [
-#             {
-#                 "name": "All Pilgrims Christian Church",
-#                 "address_line1": "500 Broadway E",
-#                 "city": "Seattle",
-#                 "state": "WA",
-#                 "postal_code": "98102",
-#                 "latitude": 47.6233603,
-#                 "longitude": -122.3203773,
-#                 "phone": "(206)-972-2524",
-#                 "eligibility": "general_public",
-#                 "hours": {
-#                     "sunday": [],
-#                     "monday": [{"open": "10:00", "close": "14:00"}],
-#                     "tuesday": [{"open": "10:00", "close": "14:00"}],
-#                     "wednesday": [{"open": "10:00", "close": "14:00"}],
-#                     "thursday": [{"open": "10:00", "close": "14:00"}],
-#                     "friday": [{"open": "10:00", "close": "14:00"}],
-#                     "saturday": [],
-#                 },
-#                 "service_notes": "Coffee and breakfast served 9:30am-10:30am. Lunch served 11:30am-1:00pm. No sign-in required.",
-#                 "services": ["meal"],
-#             }
-#         ],
-#     },
-# ]
+

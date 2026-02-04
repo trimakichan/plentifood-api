@@ -4,7 +4,13 @@ from app.models.site import Site
 from app.models.organization import Organization, OrgType
 from app.models.service import Service
 from app.models.site_service import SiteService
+from math import radians, sin, cos, asin, sqrt
+
 from ..db import db
+
+EARTH_RADIUS_MILES = 3958.8
+MILES_PER_DEGREE_LAT = 69.0  # approx
+
 
 def is_open_on_day(day):
     return func.coalesce(func.jsonb_array_length(Site.hours.op("->")(day)), 0) > 0
@@ -18,12 +24,9 @@ def apply_site_filters(query, filters):
     if days:
         query = query.where(or_(*[is_open_on_day(day) for day in days]))
 
-
     # Work on this logic once services are added
     # optional: organization_type
-    org_types = [
-        OrgType(value) for value in filters.getlist("organization_type")
-    ]
+    org_types = [OrgType(value) for value in filters.getlist("organization_type")]
     if org_types:
         query = query.join(Organization).where(
             Organization.organization_type.in_(org_types)
@@ -60,41 +63,60 @@ def validate_model(cls, model_id):
 
     return model
 
-# def create_model(cls, model_data):
-#     try:
-#         new_model = cls.from_dict(model_data)
-#     except KeyError as error:
-#         invalid_msg = {"details": f"Invalid data"}
-#         abort(make_response(invalid_msg, 400))
-    
-#     db.session.add(new_model)
-#     db.session.commit()
-
-#     return new_model
-
-
-
-# day={{DAY}}&
-# organization_type={{ORGANIZATION_TYPE}}&
-# service={{SERVICE_TYPE}}
-
-# Filters received: ImmutableMultiDict([('lat', '47.6204'),
-# ('lon', '-122.3494'),
-# ('radius_miles', '5'),
-# ('day', '["wednesday\', "friday"]'),
-# ('organization_type', '"food_bank"'),
-# ('service', "['food_bank', 'meal']")])
-
 
 def get_models_with_filters(cls, filters=None):
     query = db.select(cls)
-    # find the nearby sites based on lat, lon, radius_miles
 
     # check other filters like day, organization_type, service_type
     if filters:
+        # find the nearby sites based on lat, lon, radius_miles
+        try:
+            lat = float(filters["lat"])
+            lon = float(filters["lon"])
+            radius_miles = float(filters["radius_miles"])
+        except ValueError:
+            abort(400, description="lat, lon, and radius_miles must be numbers.")
+        # Get bounding box
+        min_lat, max_lat, min_lon, max_lon = bounding_box(lat, lon, radius_miles)
+
+        query = query.filter(
+            Site.latitude.isnot(None),
+            Site.longitude.isnot(None),
+            Site.latitude.between(min_lat, max_lat),
+            Site.longitude.between(min_lon, max_lon)
+        )
+
         query = apply_site_filters(query, filters)
 
     models = db.session.scalars(query.order_by(cls.id)).all()
-    models_response = [model.to_dict() for model in models]
+
+    if filters:
+        nearby = []
+        for model in models:
+            distance = haversine_miles(lat, lon, model.latitude, model.longitude)
+            if distance <= radius_miles:
+                nearby.append(model)
+
+
+    models_response = [model.to_dict() for model in (nearby if filters else models)]
     return models_response
 
+
+def haversine_miles(lat1, lon1, lat2, lon2):
+    dlat = radians(lat2 - lat1)
+    dlon = radians(lon2 - lon1)
+
+    a = (
+        sin(dlat / 2) ** 2
+        + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon / 2) ** 2
+    )
+    c = 2 * asin(sqrt(a))
+    return EARTH_RADIUS_MILES * c
+
+
+def bounding_box(lat, lon, radius_miles):
+    lat_delta = radius_miles / MILES_PER_DEGREE_LAT
+    # guard against cos(±90°) edge case
+    lon_delta = radius_miles / (MILES_PER_DEGREE_LAT * max(cos(radians(lat)), 0.000001))
+
+    return (lat - lat_delta, lat + lat_delta, lon - lon_delta, lon + lon_delta)
