@@ -44,18 +44,22 @@ source venv/bin/activate   # macOS/Linux
 venv\Scripts\activate      # Windows
 ```
 
-4. Install Dependencies
+3. Install Dependencies
 ```
 pip install -r requirements.txt
 ```
 
-6. Configure Environment Variables
+4. Configure Environment Variables
 
 Create a .env file in the root directory:
+
+Note: The API uses the LocationIQ API, which requires an API key.
 ```
 DATABASE_URL=postgresql://localhost/plentifood_db
 SECRET_KEY=your_secret_key
 FLASK_ENV=development
+
+LOCATIONIQ_API_KEY=YOUR_API_KEY
 ```
 
 Ensure PostgreSQL is running locally and the database exists.
